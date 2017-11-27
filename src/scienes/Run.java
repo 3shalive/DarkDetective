@@ -1,10 +1,5 @@
 package scienes;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -21,8 +16,8 @@ import logic.Player;
 import logic.Teleporter;
 
 public class Run extends MyWorld {
-	public Run(int id) {
-		super(id);
+	public Run(int id, Player player) {
+		super(id, player);
 	}
 
 	Player player;
@@ -34,9 +29,8 @@ public class Run extends MyWorld {
 	public void init(final GameContainer container, final StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		player = new Player(270, 750);
-//	    camera = new Camera(player, new Rectangle(0, 0, 1280, 1024), container);
 	    camera = new Camera(player, new Rectangle(0, 0, 560, 1100), container);
-	    background = new Image("D:/Data/background4.jpg");
+	    background = new Image("textures/map2.png");
 	    leave = new Teleporter(240, 0, 400, 40, 2, game);
 	    enter = new Teleporter(480, 680, 120, 40, 2, game);
 	    enter.setAllowed(false, "Я оттуда приехал - нет смысла возвращаться");
@@ -44,39 +38,29 @@ public class Run extends MyWorld {
 	    leave.debug = true;
 	    add(leave);
 	    add(enter);
-	    try {
-			BufferedReader reader = new BufferedReader(new FileReader(new File("D:/Data/file.txt")));
-		    int map[][] = {
-		    		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-		    		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-		    		{1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1},
-		    		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,1,1,0},
-		    		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		    		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		    		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		    		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		    		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		    		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		    		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,1,1,1},
-		    		{1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1},
-		    		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-		    		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
-		    for(int i = 0; i<14; i++){
-		    	for(int j = 0; j<28; j++){
-		    		System.out.print(map[i][j]);
-		    		if(map[i][j]==1){
-		    			add(new LightTree(40*i, 40*j));
-		    		}	    		
-		    		if(j==12){
-		    			System.out.println();
-		    		}
-		    		
-		    	}
-		    }
-		    this.map = map;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+	    int map[][] = {
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1},
+				{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0},
+				{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{1,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,1,1,1},
+				{1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+		for(int i = 0; i<14; i++){
+			for(int j = 0; j<28; j++){
+				if(map[i][j]==1){
+					add(new LightTree(40*i, 40*j));
+				}	    		
+			}
 		}
+		this.map = map;
 	    add(player);
 	}
 
@@ -86,12 +70,10 @@ public class Run extends MyWorld {
 		g.setColor(Color.green);
 		g.drawString("Camera: "+camera, player.x - 250, player.y - 170);
 		g.drawString("Hero "+player, player.x - 250, player.y - 150);
-//		player.render(container, g);
-//		car.render(container, g);
-//		lost_car.render(container, g);
 		for(Entity en :this.getEntities()){
 			en.render(container, g);
 		}
+		if(showInvent)invent.render(container, g);
 	}
 
 	@Override

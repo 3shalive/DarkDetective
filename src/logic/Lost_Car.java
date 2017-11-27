@@ -10,6 +10,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 
 import it.marteEngine.entity.Entity;
+import items.Diary;
 
 public class Lost_Car extends Entity {
 
@@ -20,15 +21,18 @@ public class Lost_Car extends Entity {
 	GameContainer container;
 	boolean isAllowed2Draw = false;
 	boolean isAllowed2DrawHint = false;
+	Player player;
 	Font font = new Font("Courier New", Font.PLAIN, 14);
 	TrueTypeFont slicFont = new TrueTypeFont(font, true,("йцукенгшщзхъфывапролджэячсмитьбю".toUpperCase()+"йцукенгшщзхъфывапролджэячсмитьбю").toCharArray());
 	
 	
+	//добавить музыку и звуки! очень важно!
+	//научить перса стрелять
+	//(миск) анимаш
 	
-	
-	public Lost_Car(float x, float y) throws SlickException {
+	public Lost_Car(float x, float y, Player player) throws SlickException {
 		super(x, y);
-		//TODO добавить путь к изображеньке
+		this.player = player;
 		graphic = new Image("textures/lost_car.png");
 		setHitBox(0, 0, 100, 64);
 		addType(SOLID);
@@ -40,8 +44,9 @@ public class Lost_Car extends Entity {
 		g.setFont(slicFont);
 		this.container = container;
 		if(isAllowed2Draw&&time>0){
-			g.drawString("Вы нашли старый блокнот", x-50, y + 50);
-			g.drawString("Нажмите <I> чтобы открыть рюкзак", x-50, y + 70);
+			g.drawString("Машина брошена, и поросла мхом", x-50, y + 30);
+			g.drawString("Между сиденьями нашелся старый дневник", x-50, y + 50);
+			g.drawString("Нажмите <Tab> чтобы открыть рюкзак", x-50, y + 70);
 			
 			
 		} 
@@ -67,6 +72,9 @@ public class Lost_Car extends Entity {
 				isAllowed2Draw = true;
 				time = 15000;
 				wasted = true;
+				System.out.println("player:"+player);
+				System.out.println("inventory:"+player.invent);
+				player.invent.putItem(new Diary(player));
 			}
 	}
 }

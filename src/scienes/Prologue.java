@@ -1,8 +1,8 @@
 package scienes;
 
-import core.MyWorld;
+import it.marteEngine.World;
 
-public class Prologue extends MyWorld{
+public class Prologue extends World{
 
 	public Prologue(int id) {
 		super(id);

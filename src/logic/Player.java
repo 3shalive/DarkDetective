@@ -7,7 +7,9 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
+import core.Item;
 import it.marteEngine.entity.Entity;
+import items.Gun;
 
 public class Player extends Entity{
 	public static final int LEFT = 1;
@@ -17,9 +19,15 @@ public class Player extends Entity{
 	public Rectangle graphic;
 	Image player;
 	public boolean debug = false;
+	public Inventary invent;
+	public int hp = 100;
+	public Item wearpon = new Gun(this);
+	public Monster target = null;
+
 	
 	public Player(float x, float y) throws SlickException {
 		super(x, y);
+		invent = new Inventary(x + 50, y + 50, this);
 		define("RIGHT", Input.KEY_D);
 		define("LEFT", Input.KEY_A);
 		define("UP", Input.KEY_W);
@@ -43,7 +51,7 @@ public class Player extends Entity{
 		if(check("LEFT")&&collide(SOLID, x-2, y)==null)x--;
 		if(check("UP")&&collide(SOLID, x, y-2)==null)y--; 
 		if(check("DOWN")&&collide(SOLID, x, y+2)==null)y++;
-		if(check("ATTAK"))System.out.println("Тык!");
+		if(check("ATTAK"))wearpon.effect(target);
 		graphic.setX(x);	
 		graphic.setY(y);
 	}	

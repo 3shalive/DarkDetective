@@ -2,12 +2,11 @@ package scienes;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import it.marteEngine.ME;
 import it.marteEngine.World;
+import logic.Player;
 
 public class Launcher extends StateBasedGame {
 
@@ -17,17 +16,18 @@ public class Launcher extends StateBasedGame {
 
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
+		Player player = new Player(0,0);
 		this.addState(new Prologue(0));
-		World state = new OutOfFuel(1);
+		World state = new OutOfFuel(1, player);
 		state.container = container;
 		this.addState(state);
-		this.addState(new Run(2));
-		this.addState(new Village(3));
-		this.addState(new Motel(4));
-		this.addState(new CrimeSciene(5));
-		this.addState(new FirstOnfall(6));
-		this.addState(new Waterfall(7));
-		this.addState(new Epilogue(8));
+		this.addState(new Run(2, player));
+		this.addState(new Village(3, player));
+		this.addState(new Motel(4, player));
+		this.addState(new CrimeSciene(5, player));
+		this.addState(new FirstOnfall(6, player));
+		this.addState(new Waterfall(7, player));
+		this.addState(new Epilogue(8, player));
 		enterState(1);
 	}
 
