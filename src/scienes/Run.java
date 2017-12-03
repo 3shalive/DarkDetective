@@ -1,62 +1,76 @@
 package scienes;
 
+import java.awt.Font;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 import core.Camera;
 import core.MyWorld;
 import it.marteEngine.entity.Entity;
+import items.Blant;
+import items.Diary;
+import items.Gun;
+import items.Medicine;
 import logic.LightTree;
 import logic.Player;
 import logic.Teleporter;
+import logic.VoidMonster;
 
 public class Run extends MyWorld {
-	public Run(int id, Player player) {
+	public Run(int id,Player player) {
 		super(id, player);
 	}
 
 	Player player;
-	Teleporter enter;
 	Teleporter leave;
+	Image pic;
+	VoidMonster monster;
 	int map[][];
+	boolean showMessage = false;
+	Font font = new Font("Courier New", Font.BOLD, 72);
+	TrueTypeFont slicFont = new TrueTypeFont(font, true,("йцукенгшщзхъфывапролджэ€чсмитьбюЄ".toUpperCase()+"йцукенгшщзхъфывапролджэ€чсмитьбюЄ").toCharArray());
+
 	
 	@Override
-	public void init(final GameContainer container, final StateBasedGame game) throws SlickException {
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		player = new Player(270, 750);
-	    camera = new Camera(player, new Rectangle(0, 0, 560, 1100), container);
+		invent.putItem(new Gun(player));
+		invent.putItem(new Blant(player));
+		invent.putItem(new Medicine(player));
+		invent.putItem(new Diary(player));
+		player = new Player(270, 1500);
+		camera = new Camera(player, new Rectangle(0, 0, 560, 1800), container);
 	    background = new Image("textures/map2.png");
-	    leave = new Teleporter(240, 0, 400, 40, 2, game);
-	    enter = new Teleporter(480, 680, 120, 40, 2, game);
-	    enter.setAllowed(false, "я оттуда приехал - нет смысла возвращатьс€");
-	    enter.debug = true;
+	    pic = background;
+	    leave = new Teleporter(240, 0, 400, 40, 3, game);
 	    leave.debug = true;
 	    add(leave);
-	    add(enter);
 	    int map[][] = {
-				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1},
-				{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0},
-				{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{1,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,1,1,1},
-				{1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1},
-				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1},
+				{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
+				{1,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0},
+				{1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,0,1,1,1,0,0,0},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+				{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
 		for(int i = 0; i<14; i++){
-			for(int j = 0; j<28; j++){
+			for(int j = 0; j<36; j++){
 				if(map[i][j]==1){
-					add(new LightTree(40*i, 40*j));
+					add(new LightTree(40*i, 50*j));
 				}	    		
 			}
 		}
@@ -67,17 +81,32 @@ public class Run extends MyWorld {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		super.render(container, game, g);
-		g.setColor(Color.green);
-		g.drawString("Camera: "+camera, player.x - 250, player.y - 170);
-		g.drawString("Hero "+player, player.x - 250, player.y - 150);
+		pic.draw(0, 1100);
+		g.setFont(slicFont);
+		g.setColor(Color.black);
 		for(Entity en :this.getEntities()){
 			en.render(container, g);
 		}
 		if(showInvent)invent.render(container, g);
+		if(showMessage)g.drawString("RUN", player.x, player.y+100);
 	}
-
+		
 	@Override
-	public void update(final GameContainer container, StateBasedGame game, int delta) throws SlickException {
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		super.update(container, game, delta);
+		if(player.y<1100&&monster==null) {
+			monster = new VoidMonster(50, 1500, player, game);
+			add(monster, GAME);
+			showMessage = true;
+			player.speed = 2;
+		}
+		if(player.y<800) showMessage = false;
+		System.out.println("player.y: "+player.y);
+		if(monster!=null)System.out.println("monster.y: "+monster.y);
 	}
+	
 }
+
+
+
+

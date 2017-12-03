@@ -32,16 +32,20 @@ public class OutOfFuel extends MyWorld {
 	Teleporter enter;
 	Teleporter leave;
 	int map[][];
+	Image test72;
+	Image test720;
 
 	@Override
-	public void init(final GameContainer container, final StateBasedGame game) throws SlickException {
+	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
+		test72 =  new Image("textures/test72.png");
+		test720 =  new Image("textures/test720.png");
 		player.x = (container.getWidth()+30)/2;
 		player.y = (container.getHeight()+330)/2;
 		invent.putItem(new Gun(player));
 		invent.putItem(new Blant(player));
 		invent.putItem(new Medicine(player));
-	    camera = new Camera(player, new Rectangle(0, 0, 880, 720), container);
+		camera = new Camera(player, new Rectangle(0, 0, 880, 720), container);
 	    background = new Image("textures/map.png");
 	    car = new Car(player.x+100, player.y+50);
 	    lost_car = new Lost_Car(300, 250, player);
@@ -95,7 +99,7 @@ public class OutOfFuel extends MyWorld {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		super.render(container, game, g);
-		g.setColor(Color.green);
+		g.setColor(Color.black);
 		for(Entity en :this.getEntities()){
 			en.render(container, g);
 		}

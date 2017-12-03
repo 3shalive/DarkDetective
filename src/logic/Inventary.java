@@ -9,15 +9,21 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 
+import core.Camera;
 import core.Item;
+import core.MyWorld;
 import it.marteEngine.entity.Entity;
 
 public class Inventary extends Entity{
 private ArrayList<Item> inventList = new ArrayList<Item>();
 private Item currentItem = null;
 Player player;
+Camera camera;
 Font font = new Font("Courier New", Font.PLAIN, 14);
-TrueTypeFont slicFont = new TrueTypeFont(font, true,("йцукенгшщзхъфывапролджэ€чсмитьбю".toUpperCase()+"йцукенгшщзхъфывапролджэ€чсмитьбю").toCharArray());
+Font active_font = new Font("Courier New", Font.BOLD, 14);
+TrueTypeFont slicFont = new TrueTypeFont(font, true,("йцукенгшщзхъфывапролджэ€чсмитьбюЄ".toUpperCase()+"йцукенгшщзхъфывапролджэ€чсмитьбю").toCharArray());
+TrueTypeFont AciveSlicFont = new TrueTypeFont(active_font, true,("йцукенгшщзхъфывапролджэ€чсмитьбюЄ".toUpperCase()+"йцукенгшщзхъфывапролджэ€чсмитьбю").toCharArray());
+
 
 public Inventary(float x, float y, Player player) throws SlickException {
 		super(x, y);
@@ -29,7 +35,9 @@ public Inventary(float x, float y, Player player) throws SlickException {
 	g.setFont(slicFont);
 		for (int i = 0; i<inventList.size(); i++) {
 			Item item = inventList.get(i);
+			if(item.equals(currentItem))g.setFont(AciveSlicFont);			
 			g.drawString(item.getName(), x+50, i*50+y+50);
+			g.setFont(slicFont);
 			g.drawImage(item.getIcon(), x+10, i*50+y+25);
 		}
 		if(currentItem!=null){
@@ -37,8 +45,8 @@ public Inventary(float x, float y, Player player) throws SlickException {
 		for (int j = 0; j<currentItem.stats.size(); j++) {
 			g.drawString(currentItem.stats.get(j), x+300, 20*j+y+100);
 		}
-		g.drawString("»спользуйте стрелочки дл€ управлени€ инвентарЄм", x, y);		
 		}
+		g.drawString("»спользуйте стрелочки дл€ управлени€ инвентарЄм", x, y);		 
 }
 
 	public void putItem(Item item){
@@ -66,6 +74,13 @@ public Inventary(float x, float y, Player player) throws SlickException {
 			else currentItem = inventList.get(0);
 		}
 		
+	}
+	
+	@Override
+		public void update(GameContainer container, int delta) throws SlickException {
+			//super.update(container, delta);
+			x = player.x-250;
+			y = player.y-250;
 	}
 
 }

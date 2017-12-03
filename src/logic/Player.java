@@ -17,7 +17,8 @@ public class Player extends Entity{
 	public static final int RIGHT = 3;
 	public static final int DOWN = 4;
 	public Rectangle graphic;
-	Image player;
+	private Image player;
+	public int speed = 1;
 	public boolean debug = false;
 	public Inventary invent;
 	public int hp = 100;
@@ -47,10 +48,10 @@ public class Player extends Entity{
 	
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		if(check("RIGHT")&&collide(SOLID, x+2, y)==null)x++;
-		if(check("LEFT")&&collide(SOLID, x-2, y)==null)x--;
-		if(check("UP")&&collide(SOLID, x, y-2)==null)y--; 
-		if(check("DOWN")&&collide(SOLID, x, y+2)==null)y++;
+		if(check("RIGHT")&&collide(SOLID, x+2, y)==null)x+=speed;
+		if(check("LEFT")&&collide(SOLID, x-2, y)==null)x-=speed;
+		if(check("UP")&&collide(SOLID, x, y-2)==null)y-=speed; 
+		if(check("DOWN")&&collide(SOLID, x, y+2)==null)y+=speed;
 		if(check("ATTAK"))wearpon.effect(target);
 		graphic.setX(x);	
 		graphic.setY(y);

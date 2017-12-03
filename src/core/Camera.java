@@ -15,7 +15,7 @@ public class Camera {
 	Entity toFollow;
 	Rectangle bounds;
 	Rectangle hitBox2Follow = new Rectangle(0,0,20,20);
-	Dimension size;
+	public Dimension size;
 	Vector2f position;
 	private Vector2f OutOfBounds = new Vector2f();
 	

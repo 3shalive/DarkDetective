@@ -16,14 +16,23 @@ public class MyWorld extends World {
 	
 	Vector2f where2draw;
 	protected Image background;
-	protected Camera camera;
+	public Camera camera;
 	protected boolean showInvent = false;
 	protected Inventary invent;
 	public Player player;
+	public int hours = 12;
+	public int minutes = 0;
+	public int sec = 0;
+	private int day = 0;
+	String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 	
 	public MyWorld(int id, Player player) {
 		super(id);
-		this.player = player;
+		try {
+			this.player = new Player(0,0);
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -38,6 +47,8 @@ public class MyWorld extends World {
 		if(camera!=null)camera.draw(container, g);
 		if(background!=null)background.draw(0, 0);
 		if(showInvent)invent.render(container, g);
+		if(hours<=12) g.drawString(days[day]+" "+hours+":"+minutes+" am", player.x+140, player.y-240);
+		else g.drawString(days[day]+" "+ (hours-12)+":"+minutes+" pm", player.x+140, player.y-240);
 	}
 	
 	@Override
@@ -51,8 +62,22 @@ public class MyWorld extends World {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		super.update(container, game, delta);
-		invent.x = player.x-250;
-		invent.y = player.y-250;
+		sec++;
+		
+		if(sec>=60) {
+			minutes++;
+			sec=0;
+		}
+		if(minutes>=60) {
+			hours++;
+			minutes=0;
+		}
+		if(hours>=24){
+			hours=0;
+			day++;
+		}
+		if(day>6) day = 0;
+		player.invent.update(container, delta);
 	}
 	
 }

@@ -5,7 +5,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import it.marteEngine.World;
 import logic.Player;
 
 public class Launcher extends StateBasedGame {
@@ -18,9 +17,7 @@ public class Launcher extends StateBasedGame {
 	public void initStatesList(GameContainer container) throws SlickException {
 		Player player = new Player(0,0);
 		this.addState(new Prologue(0));
-		World state = new OutOfFuel(1, player);
-		state.container = container;
-		this.addState(state);
+		this.addState(new OutOfFuel(1, player));
 		this.addState(new Run(2, player));
 		this.addState(new Village(3, player));
 		this.addState(new Motel(4, player));
@@ -28,6 +25,7 @@ public class Launcher extends StateBasedGame {
 		this.addState(new FirstOnfall(6, player));
 		this.addState(new Waterfall(7, player));
 		this.addState(new Epilogue(8, player));
+		this.addState(new Death(9));
 		enterState(1);
 	}
 

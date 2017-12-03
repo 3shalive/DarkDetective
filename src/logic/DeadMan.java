@@ -1,0 +1,62 @@
+package logic;
+
+import java.awt.Font;
+
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.TrueTypeFont;
+
+import it.marteEngine.entity.Entity;
+
+public class DeadMan extends Entity {
+
+	int time = 0;
+	int time4hint = 0;
+	Image graphic;
+	GameContainer container;
+	boolean isAllowed2Draw = false;
+	boolean isAllowed2DrawHint = false;
+	Font font = new Font("Courier New", Font.PLAIN, 14);
+	TrueTypeFont slicFont = new TrueTypeFont(font, true,("יצףךוםדרשחץתפûגאןנמכהז‎ÿקסלטעüב‏".toUpperCase()+"יצףךוםדרשחץתפûגאןנמכהז‎ÿקסלטעüב‏").toCharArray());
+	
+	
+	public DeadMan(float x, float y) throws SlickException {
+		super(x, y);
+		graphic = new Image("textures/car.png");
+		setHitBox(0, 0, 100, 64);
+		addType(SOLID);
+	}
+	
+	@Override
+	public void render(GameContainer container, Graphics g) throws SlickException {
+		if(graphic!=null) g.drawImage(graphic, x, y);
+		else System.err.println("man's image is null");
+		g.setFont(slicFont);
+		this.container = container;
+		if(isAllowed2Draw&&time>0)g.drawString("Îןא, ענףן", x-50, y + 50);
+		if(isAllowed2DrawHint&&time4hint>0)g.drawString("Îסלמענועü <Enter>", x-50, y -20);
+	}
+	
+	@Override
+	public void collisionResponse(Entity other) {
+		isAllowed2DrawHint = true;
+		time4hint = 2000;
+	}
+	
+	@Override
+	public void update(GameContainer container, int delta) throws SlickException {
+		time4hint -= delta;
+		time -= delta;
+		if((collide(PLAYER, x+10, y+10)!=null)
+				||(collide(PLAYER, x-10, y-10)!=null)
+				||(collide(PLAYER, x+10, y-10)!=null)
+				||(collide(PLAYER, x-10, y+10)!=null))
+			if(container.getInput().isKeyPressed(Input.KEY_ENTER)){
+				isAllowed2Draw = true;
+				time = 2500;
+			}
+		}
+}
