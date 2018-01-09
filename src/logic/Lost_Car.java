@@ -21,7 +21,7 @@ public class Lost_Car extends Entity {
 	GameContainer container;
 	boolean isAllowed2Draw = false;
 	boolean isAllowed2DrawHint = false;
-	Player player;
+	AgentSasha player;
 	Font font = new Font("Courier New", Font.PLAIN, 14);
 	TrueTypeFont slicFont = new TrueTypeFont(font, true,("יצףךוםדרשחץתפûגאןנמכהז‎ÿקסלטעüב‏".toUpperCase()+"יצףךוםדרשחץתפûגאןנמכהז‎ÿקסלטעüב‏").toCharArray());
 	
@@ -30,7 +30,7 @@ public class Lost_Car extends Entity {
 	//םאףקטעü ןונסא סענוכÿעü
 	//(לטסך) אםטלאר
 	
-	public Lost_Car(float x, float y, Player player) throws SlickException {
+	public Lost_Car(float x, float y, AgentSasha player) throws SlickException {
 		super(x, y);
 		this.player = player;
 		graphic = new Image("textures/lost_car.png");

@@ -11,7 +11,7 @@ import org.newdawn.slick.TrueTypeFont;
 
 import core.Camera;
 import core.Item;
-import core.MyWorld;
+import core.Player;
 import it.marteEngine.entity.Entity;
 
 public class Inventary extends Entity{
@@ -25,9 +25,9 @@ TrueTypeFont slicFont = new TrueTypeFont(font, true,("יצףךוםדרשחץתפûגאןנמכהז‎ÿקס
 TrueTypeFont AciveSlicFont = new TrueTypeFont(active_font, true,("יצףךוםדרשחץתפûגאןנמכהז‎ÿקסלטעüב‏¸".toUpperCase()+"יצףךוםדרשחץתפûגאןנמכהז‎ÿקסלטעüב‏").toCharArray());
 
 
-public Inventary(float x, float y, Player player) throws SlickException {
+public Inventary(float x, float y, Player player2) throws SlickException {
 		super(x, y);
-		this.player = player; 
+		this.player = player2; 
 	}
 
 @Override

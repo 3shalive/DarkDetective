@@ -19,16 +19,16 @@ import items.Diary;
 import items.Gun;
 import items.Medicine;
 import logic.LightTree;
-import logic.Player;
+import logic.AgentSasha;
 import logic.Teleporter;
 import logic.VoidMonster;
 
 public class Run extends MyWorld {
-	public Run(int id,Player player) {
+	public Run(int id,AgentSasha player) {
 		super(id, player);
 	}
 
-	Player player;
+	AgentSasha player;
 	Teleporter leave;
 	Image pic;
 	VoidMonster monster;
@@ -45,7 +45,7 @@ public class Run extends MyWorld {
 		invent.putItem(new Blant(player));
 		invent.putItem(new Medicine(player));
 		invent.putItem(new Diary(player));
-		player = new Player(270, 1500);
+		player = new AgentSasha(270, 1500);
 		camera = new Camera(player, new Rectangle(0, 0, 560, 1800), container);
 	    background = new Image("textures/map2.png");
 	    pic = background;

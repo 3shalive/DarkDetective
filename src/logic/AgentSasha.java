@@ -7,43 +7,22 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 
-import core.Item;
-import it.marteEngine.entity.Entity;
+import core.Player;
 import items.Gun;
 
-public class Player extends Entity{
-	public static final int LEFT = 1;
-	public static final int UP = 2;
-	public static final int RIGHT = 3;
-	public static final int DOWN = 4;
-	public Rectangle graphic;
-	private Image player;
-	public int speed = 1;
-	public boolean debug = false;
-	public Inventary invent;
-	public int hp = 100;
-	public Item wearpon = new Gun(this);
-	public Monster target = null;
-
+public class AgentSasha extends Player{
 	
-	public Player(float x, float y) throws SlickException {
+	public AgentSasha(float x, float y) throws SlickException {
 		super(x, y);
-		invent = new Inventary(x + 50, y + 50, this);
 		define("RIGHT", Input.KEY_D);
 		define("LEFT", Input.KEY_A);
 		define("UP", Input.KEY_W);
 		define("DOWN", Input.KEY_S);
-		define("ATTACK", Input.KEY_ENTER);
+		define("ATTACK", Input.KEY_LALT);
 		this.setHitBox(0, 0, 40, 50);
-		graphic = new Rectangle(x, y, 40, 50);
+		debugBounds = new Rectangle(x, y, 40, 50);
 		player = new Image("textures/char.png");
-		addType(PLAYER);
-	}
-	
-	@Override
-	public void render(GameContainer container, Graphics g) throws SlickException {
-		if(debug)g.draw(graphic);
-		g.drawImage(player, x, y);
+		wearpon = new Gun(this);
 	}
 	
 	@Override
@@ -53,8 +32,8 @@ public class Player extends Entity{
 		if(check("UP")&&collide(SOLID, x, y-2)==null)y-=speed; 
 		if(check("DOWN")&&collide(SOLID, x, y+2)==null)y+=speed;
 		if(check("ATTAK"))wearpon.effect(target);
-		graphic.setX(x);	
-		graphic.setY(y);
+		debugBounds.setX(x);	
+		debugBounds.setY(y);
 	}	
 		
 	}

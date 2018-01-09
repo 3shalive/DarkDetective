@@ -11,10 +11,10 @@ import it.marteEngine.entity.Entity;
 
 public class VoidMonster extends Entity {
 	Random rand = new Random();
-	Player player;
+	AgentSasha player;
 	StateBasedGame game;
 	
-	public VoidMonster(float x, float y, Player player, StateBasedGame game) throws SlickException {
+	public VoidMonster(float x, float y, AgentSasha player, StateBasedGame game) throws SlickException {
 		super(x, y);
 		setGraphic(new Image("textures/Gear.jpg"));
 		setHitBox(0, 0, 40, 40);

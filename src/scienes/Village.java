@@ -20,16 +20,16 @@ import items.Gun;
 import items.Medicine;
 import logic.Inventary;
 import logic.LightTree;
-import logic.Player;
+import logic.AgentSasha;
 import logic.Solid;
 import logic.Teleporter;
 
 public class Village extends MyWorld {
-	public Village(int id,Player player) {
+	public Village(int id,AgentSasha player) {
 		super(id, player);
 	}
 
-	Player player;
+	AgentSasha player;
 	Teleporter motel;
 	Teleporter run;
 	Teleporter crime_sciene;
@@ -46,7 +46,7 @@ public class Village extends MyWorld {
 		invent.putItem(new Blant(player));
 		invent.putItem(new Medicine(player));
 		invent.putItem(new Diary(player));
-		player = new Player(270, 300);
+		player = new AgentSasha(270, 300);
 		camera = new Camera(player, new Rectangle(0, 0, 920, 800), container);
 	    background = new Image("textures/map2.png");
 	    run = new Teleporter(350, 780, 140, 40, 2, game);

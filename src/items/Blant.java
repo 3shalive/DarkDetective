@@ -3,7 +3,7 @@ package items;
 import core.Item;
 import it.marteEngine.entity.Entity;
 import logic.Monster;
-import logic.Player;
+import logic.AgentSasha;
 
 public class Blant extends Item {
 
@@ -12,7 +12,7 @@ public class Blant extends Item {
 	float block = 0.5f;
 	float dodge = 0.2f;
 	
-	public Blant(Player player) {
+	public Blant(AgentSasha player) {
 		super("Дубинка", "textures/MagicBook.png", player);
 		TYPE = "WEARPON";
 		stats.add("Тип: оружие");
@@ -31,7 +31,7 @@ public class Blant extends Item {
 		if(target instanceof Monster){
 		Monster monster = (Monster)target;
 		monster.getHitted(damage);
-		}else if(target instanceof Player)
+		}else if(target instanceof AgentSasha)
 			player.wearpon = new Gun(player);
 		else System.out.println("нету монстров, некого пиздить");
 	}

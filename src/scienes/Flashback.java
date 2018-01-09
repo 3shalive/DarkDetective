@@ -10,18 +10,18 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import core.Camera;
 import core.MyWorld;
+import flashback.Car;
+import flashback.Tent;
 import it.marteEngine.entity.Entity;
 import items.Blant;
 import items.Gun;
 import items.Medicine;
-import logic.Car;
 import logic.LightTree;
-import logic.Player;
+import logic.AgentSasha;
 import logic.Teleporter;
-import logic.Tent;
 
 public class Flashback extends MyWorld {
-	public Flashback(int id, Player player) {
+	public Flashback(int id, AgentSasha player) {
 		super(id, player);
 	}
 

@@ -5,7 +5,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import logic.Player;
+import logic.AgentSasha;
 
 /**Отсюда запускается игра*/
 public class Launcher extends StateBasedGame {
@@ -16,7 +16,7 @@ public class Launcher extends StateBasedGame {
 
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
-		Player player = new Player(0,0);//инициализация игрока
+		AgentSasha player = new AgentSasha(0,0);//инициализация игрока
 		this.addState(new Prologue(0));
 		this.addState(new Flashback(1, player));
 		this.addState(new Run(2, player));

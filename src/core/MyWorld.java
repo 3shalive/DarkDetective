@@ -5,31 +5,29 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import it.marteEngine.World;
+import logic.AgentSasha;
 import logic.Inventary;
-import logic.Player;
 
 public class MyWorld extends World {
 	
-	Vector2f where2draw;
 	protected Image background;
 	public Camera camera;
 	protected boolean showInvent = false;
 	protected Inventary invent;
-	public Player player;
+	public AgentSasha player;
 	public int hours = 12;
 	public int minutes = 0;
 	public int sec = 0;
 	private int day = 0;
 	String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 	
-	public MyWorld(int id, Player player) {
+	public MyWorld(int id, AgentSasha player) {
 		super(id);
 		try {
-			this.player = new Player(0,0);
+			this.player = new AgentSasha(0,0);
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
