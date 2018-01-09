@@ -7,6 +7,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import logic.Player;
 
+/**ќтсюда запускаетс€ игра*/
 public class Launcher extends StateBasedGame {
 
 	public Launcher(String name) {
@@ -15,9 +16,9 @@ public class Launcher extends StateBasedGame {
 
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
-		Player player = new Player(0,0);
+		Player player = new Player(0,0);//инициализаци€ игрока
 		this.addState(new Prologue(0));
-		this.addState(new OutOfFuel(1, player));
+		this.addState(new Flashback(1, player));
 		this.addState(new Run(2, player));
 		this.addState(new Village(3, player));
 		this.addState(new Motel(4, player));
@@ -26,11 +27,10 @@ public class Launcher extends StateBasedGame {
 		this.addState(new Waterfall(7, player));
 		this.addState(new Epilogue(8, player));
 		this.addState(new Death(9));
-		enterState(1);
+		enterState(1);//можно изменить id сцены, когда нужно что-то отладить
 	}
 
 	public static void main(String[] args) throws SlickException {
-		//ME.keyToggleDebug = Input.KEY_ENTER;
 		AppGameContainer game = new AppGameContainer(new Launcher("The Beast"));
 		game.setDisplayMode(512, 512, false);
 		game.setTargetFrameRate(60);

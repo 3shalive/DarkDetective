@@ -2,6 +2,7 @@ package scienes;
 
 import java.awt.Font;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -22,6 +23,7 @@ public class Death extends World {
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		super.render(container, game, g);
 		g.setFont(slicFont);
+		g.setColor(Color.red);
 		g.drawString("Ты мёртв", 201, 261);
 	}
 
