@@ -1,4 +1,4 @@
-package logic;
+package flashback;
 
 import java.awt.Font;
 
@@ -11,6 +11,7 @@ import org.newdawn.slick.TrueTypeFont;
 
 import it.marteEngine.entity.Entity;
 import items.Diary;
+import logic.AgentSasha;
 
 public class Lost_Car extends Entity {
 

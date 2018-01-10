@@ -5,6 +5,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import flashback.Flashback;
 import logic.AgentSasha;
 
 /**Отсюда запускается игра*/
@@ -17,7 +18,7 @@ public class Launcher extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
 		AgentSasha player = new AgentSasha(0,0);//инициализация игрока
-		this.addState(new Prologue(0));
+//		this.addState(new Prologue(0)); //на время отладки отключена
 		this.addState(new Flashback(1, player));
 		this.addState(new Run(2, player));
 		this.addState(new Village(3, player));
@@ -27,13 +28,15 @@ public class Launcher extends StateBasedGame {
 		this.addState(new Waterfall(7, player));
 		this.addState(new Epilogue(8, player));
 		this.addState(new Death(9));
-		enterState(0);//можно изменить id сцены, когда нужно что-то отладить
+		this.addState(new MainMenu(10));
+		enterState(1);//можно изменить id сцены, когда нужно что-то отладить
 	}
 
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer game = new AppGameContainer(new Launcher("The Beast"));
-		game.setDisplayMode(512, 512, false);
-		game.setTargetFrameRate(60);
+//		game.setDisplayMode(512, 512, false); //#нухуйзнает
+		game.setDisplayMode(800, 600, false);
+		game.setTargetFrameRate(90);
 		game.start();
 	}
 

@@ -1,28 +1,29 @@
-package scienes;
+package flashback;
+
+import javax.management.openmbean.KeyAlreadyExistsException;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 import core.Camera;
 import core.MyWorld;
-import flashback.Car;
-import flashback.Tent;
 import it.marteEngine.entity.Entity;
 import items.Blant;
 import items.Gun;
-import items.Medicine;
-import logic.LightTree;
 import logic.AgentSasha;
+import logic.LightTree;
 import logic.Teleporter;
 
 public class Flashback extends MyWorld {
-	public Flashback(int id, AgentSasha player) {
-		super(id, player);
+	public Flashback(int id, AgentSasha sasha) {
+		super(id, sasha);
 	}
 
 	Car car;
@@ -30,18 +31,28 @@ public class Flashback extends MyWorld {
 	Teleporter enter;
 	Teleporter leave;
 	int map[][];
+	Music leitmotive ;
 
+	@Override
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+		super.enter(container, game);
+		leitmotive = new Music("data/Flashback.ogg");
+		leitmotive.loop();
+		leitmotive.play();
+	}
+	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		player.x = (container.getWidth() + 30) / 2;
-		player.y = (container.getHeight() + 330) / 2;
-		invent.putItem(new Gun(player));
-		invent.putItem(new Blant(player));
-		invent.putItem(new Medicine(player));
-		camera = new Camera(player, new Rectangle(0, 0, 880, 720), container);
+		sasha.x = (container.getWidth() + 30) / 2;
+		sasha.y = (container.getHeight() + 30) / 2;
+		octavian.x = (container.getWidth() + 30) / 2 + 100;
+		octavian.y = (container.getHeight() + 330) / 2 + 100;
+		invent.putItem(new Gun(sasha));
+		invent.putItem(new Blant(octavian));
+		camera = new Camera(sasha, new Rectangle(0, 0, 880, 720), container);
 		background = new Image("textures/map.png");
-		car = new Car(player.x + 100, player.y + 50);
+		car = new Car(sasha.x + 100, sasha.y + 50);
 		tent = new Tent(600, 250);
 		leave = new Teleporter(240, 0, 400, 40, 2, game);
 		enter = new Teleporter(520, 680, 120, 40, 2, game);
@@ -49,7 +60,8 @@ public class Flashback extends MyWorld {
 		leave.setAllowed(true, "Сначала нужно все обыскать");
 		enter.debug = false;
 		leave.debug = false;
-		player.debug = false;
+		sasha.debug = true;
+		octavian.debug = true;
 		int map[][] = { { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 				{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 				{ 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 },
@@ -80,11 +92,12 @@ public class Flashback extends MyWorld {
 			}
 		}
 		this.map = map;
-		add(player);
 		add(car);
 		add(tent);
 		add(leave);
 		add(enter);
+		add(sasha);
+		add(octavian);
 	}
 
 	@Override
@@ -100,7 +113,17 @@ public class Flashback extends MyWorld {
 	}
 
 	@Override
-	public void update(final GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		super.update(container, game, delta);
+	public void keyPressed(int key, char c) {
+		super.keyPressed(key, c);
+		if(key == Input.KEY_ESCAPE){
+			game.enterState(10);
+		}
 	}
+	
+	@Override
+	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+		super.leave(container, game);
+		leitmotive.stop();
+	}
+	
 }

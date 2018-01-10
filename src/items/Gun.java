@@ -4,7 +4,6 @@ import core.Item;
 import core.Player;
 import it.marteEngine.entity.Entity;
 import logic.Monster;
-import logic.AgentSasha;
 
 public class Gun extends Item {
 	int bullets = 30;
@@ -30,9 +29,8 @@ public class Gun extends Item {
 		if(target instanceof Monster){
 		Monster monster = (Monster)target;
 		monster.getHitted(damage);
-		}else if(target instanceof AgentSasha)
-			player.wearpon = new Gun(player);
-		else System.out.println("нету монстров, некого пиздить");
+		}else if(target instanceof Player)
+		System.out.println("нету монстров, некого пиздить");
 	}
 	
 }

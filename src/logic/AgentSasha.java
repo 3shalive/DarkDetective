@@ -1,7 +1,6 @@
 package logic;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -19,9 +18,9 @@ public class AgentSasha extends Player{
 		define("UP", Input.KEY_W);
 		define("DOWN", Input.KEY_S);
 		define("ATTACK", Input.KEY_LALT);
-		this.setHitBox(0, 0, 40, 50);
-		debugBounds = new Rectangle(x, y, 40, 50);
-		player = new Image("textures/char.png");
+		this.setHitBox(0, 50, 40, 10);
+		debugBounds = new Rectangle(x, y+50, 40, 10);
+		player = new Image("textures/sasha.png");
 		wearpon = new Gun(this);
 	}
 	
@@ -33,7 +32,7 @@ public class AgentSasha extends Player{
 		if(check("DOWN")&&collide(SOLID, x, y+2)==null)y+=speed;
 		if(check("ATTAK"))wearpon.effect(target);
 		debugBounds.setX(x);	
-		debugBounds.setY(y);
+		debugBounds.setY(y+50);
 	}	
 		
 	}
