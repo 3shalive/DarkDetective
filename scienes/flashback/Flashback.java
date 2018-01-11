@@ -36,7 +36,7 @@ public class Flashback extends MyWorld {
 	Teleporter leave;
 	int map[][];
 	Music leitmotive ;
-	int counter = 3000;
+	int counter = 0;
 	Image firstSlideshow[];
 	Image line;
 	Image big_line;

@@ -28,7 +28,7 @@ public class Launcher extends StateBasedGame {
 		this.addState(new Epilogue(8, player));
 		this.addState(new Death(9));
 		this.addState(new MainMenu(10));
-		enterState(1);//можно изменить id сцены, когда нужно что-то отладить
+		enterState(0);//можно изменить id сцены, когда нужно что-то отладить
 	}
 
 	public static void main(String[] args) throws SlickException {
