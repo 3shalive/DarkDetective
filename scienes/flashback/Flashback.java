@@ -1,6 +1,9 @@
 package flashback;
 
-import javax.management.openmbean.KeyAlreadyExistsException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JLabel;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -17,6 +20,7 @@ import core.MyWorld;
 import it.marteEngine.entity.Entity;
 import items.Blant;
 import items.Gun;
+import logic.AgentOctavian;
 import logic.AgentSasha;
 import logic.LightTree;
 import logic.Teleporter;
@@ -98,6 +102,7 @@ public class Flashback extends MyWorld {
 		add(enter);
 		add(sasha);
 		add(octavian);
+		primary_player = octavian;
 	}
 
 	@Override
@@ -112,6 +117,41 @@ public class Flashback extends MyWorld {
 		
 	}
 
+	@Override
+	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+		super.update(container, game, delta);
+		if(sasha.y<octavian.y && primary_player instanceof AgentSasha){
+			this.remove(octavian);
+			this.add(octavian);
+			JLabel label = new JLabel();
+			label.addMouseListener(new MouseAdapter() {
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+		} 
+		
+		if(octavian.y < sasha.y && primary_player instanceof AgentOctavian){
+			this.remove(sasha);
+			this.add(sasha);
+		} 		
+	}
+	
 	@Override
 	public void keyPressed(int key, char c) {
 		super.keyPressed(key, c);

@@ -14,6 +14,7 @@ import logic.Inventary;
 
 public class MyWorld extends World {
 	
+	protected Player primary_player;
 	protected Image background;
 	public Camera camera;
 	protected boolean showInvent = false;

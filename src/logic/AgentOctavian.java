@@ -26,10 +26,10 @@ public class AgentOctavian extends Player{
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
-		if(check("RIGHT")&&collide(SOLID, x+2, y)==null)x+=speed;
-		if(check("LEFT")&&collide(SOLID, x-2, y)==null)x-=speed;
-		if(check("UP")&&collide(SOLID, x, y-2)==null)y-=speed; 
-		if(check("DOWN")&&collide(SOLID, x, y+2)==null)y+=speed;
+		if(check("RIGHT")&&collide(SOLID, x+2, y)==null&&collide(PLAYER, x+2, y)==null)x+=speed;
+		if(check("LEFT")&&collide(SOLID, x-2, y)==null&&collide(PLAYER, x-2, y)==null)x-=speed;
+		if(check("UP")&&collide(SOLID, x, y-2)==null&&collide(PLAYER, x, y-2)==null)y-=speed; 
+		if(check("DOWN")&&collide(SOLID, x, y+2)==null&&collide(PLAYER, x, y+2)==null)y+=speed;
 		if(check("ATTAK"))wearpon.effect(target);
 		debugBounds.setX(x);	
 		debugBounds.setY(y+50);
