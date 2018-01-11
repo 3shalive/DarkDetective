@@ -1,16 +1,15 @@
 package items;
 
 import core.Item;
+import core.Player;
 import it.marteEngine.entity.Entity;
-import logic.Monster;
-import logic.AgentSasha;
 
 public class Medicine extends Item {
 
 	float speed = 0.1f;
 	int heals = 15;
 	
-	public Medicine(AgentSasha player) {
+	public Medicine(Player player) {
 		super("Аптечка", "textures/MagicBook.png", player);
 		TYPE = "TOOL";
 		stats.add("Тип: инструмент");
@@ -23,7 +22,7 @@ public class Medicine extends Item {
 	//для анимации лечения
 	@Override
 	public void effect(Entity target) {
-		if(target instanceof AgentSasha){
+		if(target instanceof Player){
 		player.hp += heals; 
 		}else System.out.println("монстров лечить не буду");
 	}

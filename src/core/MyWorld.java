@@ -18,7 +18,7 @@ public class MyWorld extends World {
 	protected Image background;
 	public Camera camera;
 	protected boolean showInvent = false;
-	protected Inventary invent;
+	protected Inventary sashasInventary;
 	public AgentSasha sasha;
 	public AgentOctavian octavian;
 	public int hours = 12;
@@ -41,7 +41,7 @@ public class MyWorld extends World {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		invent = sasha.invent;
+		sashasInventary = sasha.invent;
 		this.game = game;
 	}
 	
@@ -50,7 +50,7 @@ public class MyWorld extends World {
 		super.render(container, game, g);
 		if(camera!=null)camera.draw(container, g);
 		if(background!=null)background.draw(0, 0);
-		if(showInvent)invent.render(container, g);
+		if(showInvent)sashasInventary.render(container, g);
 		if(hours<=12) g.drawString(days[day]+" "+hours+":"+minutes+" am", sasha.x+140, sasha.y-240);
 		else g.drawString(days[day]+" "+ (hours-12)+":"+minutes+" pm", sasha.x+140, sasha.y-240);
 	}

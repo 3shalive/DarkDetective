@@ -38,9 +38,8 @@ public class Prologue extends World {
 		mass[0] = new Image("char.png");
 		mass[1] = new Image("Gear.jpg");
 		mass[2] = new Image("lost_car.png");
-		mailboxSound = new Sound("data/la.ogg");
+		mailboxSound = new Sound("data/intro.ogg");
 		mailboxSound1 = new Sound("data/na.ogg");
-
 	}
 
 	@Override
@@ -48,20 +47,17 @@ public class Prologue extends World {
 		super.render(container, game, g);
 		g.setColor(Color.green);
 		g.setFont(slicFont);
-		if (i < 100) {
-			g.drawImage(mass[0], 0, 0);
+		if (i < 500) {
 			g.drawString("Мой отец при загадочных обстоятельствах\nпропал десять лет назад", 20, 400);
-//			g.drawString("пропал десять лет назад", 20, 420);
-			mailboxSound.play();
+			g.drawImage(mass[0], 0, 0);
 		}
-		if (i < 200 && i > 100) {
+		if (i < 900 && i > 500) {
 			g.drawImage(mass[1], 0, 0);
-			g.drawString("САША,ПАШЕЛ НАХОЙ", 50, 400);
-			mailboxSound1.play();
+			g.drawString("Должность детектива не дают просто так,\n так что сначала я был патрульным.", 50, 400);
 		}
-		if (i > 200) {
+		if (i > 900) {
 			g.drawImage(mass[2], 0, 0);
-			g.drawString("АЗАЗААЗАЗАААНАХОЙ", 200, 400);
+			g.drawString("Недавно, мне выдали моё первое задание", 200, 400);
 
 		}
 
@@ -70,6 +66,9 @@ public class Prologue extends World {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		i++;
+		if(i==1)mailboxSound.play();
+		if(i==500)mailboxSound1.play();
+		if(i==1200)game.enterState(1);
 		super.update(container, game, delta);
 	}
 }

@@ -25,7 +25,6 @@ public class Launcher extends StateBasedGame {
 		this.addState(new Motel(4, player));
 		this.addState(new CrimeSciene(5, player));
 		this.addState(new FirstOnfall(6, player));
-		this.addState(new Waterfall(7, player));
 		this.addState(new Epilogue(8, player));
 		this.addState(new Death(9));
 		this.addState(new MainMenu(10));

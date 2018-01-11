@@ -19,7 +19,7 @@ import items.Diary;
 import items.Gun;
 import items.Medicine;
 import logic.Inventary;
-import logic.LightTree;
+import logic.Tree;
 import logic.AgentSasha;
 import logic.Solid;
 import logic.Teleporter;
@@ -41,11 +41,11 @@ public class Village extends MyWorld {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		invent = new Inventary(0, 0, player);
-		invent.putItem(new Gun(player));
-		invent.putItem(new Blant(player));
-		invent.putItem(new Medicine(player));
-		invent.putItem(new Diary(player));
+		sashasInventary = new Inventary(0, 0, player);
+		sashasInventary.putItem(new Gun(player));
+		sashasInventary.putItem(new Blant(player));
+		sashasInventary.putItem(new Medicine(player));
+		sashasInventary.putItem(new Diary(player));
 		player = new AgentSasha(270, 300);
 		camera = new Camera(player, new Rectangle(0, 0, 920, 800), container);
 	    background = new Image("textures/map2.png");
@@ -86,7 +86,7 @@ public class Village extends MyWorld {
 		for(int i = 0; i<23; i++){
 			for(int j = 0; j<16; j++){
 				if(map[i][j]==1){
-					add(new LightTree(40*i, 50*j));
+					add(new Tree(40*i, 50*j,Tree.LIGHT));
 				}	    	
 				if(map[i][j]==2){
 					add(new Solid(40*i, 40*j));
@@ -105,7 +105,7 @@ public class Village extends MyWorld {
 		for(Entity en :this.getEntities()){
 			en.render(container, g);
 		}
-		if(showInvent)invent.render(container, g);
+		if(showInvent)sashasInventary.render(container, g);
 	}
 		
 	
