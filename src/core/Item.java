@@ -6,7 +6,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import it.marteEngine.entity.Entity;
-import logic.Player;
 
 public abstract class Item {
 	public Player player;
@@ -16,14 +15,14 @@ public abstract class Item {
 	public ArrayList<String> stats = new ArrayList<String>();
 	
 	/**стандартный размер изображения для предмета - 150х150*/
-	public Item(String name, String ico, Player player) {
+	public Item(String name, String ico, Player player2) {
 		this.setName(name);
 		try {
 			this.ico = new Image(ico);
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
-		this.player = player;
+		this.player = player2;
 	}
 	
 	/**иконка - это предмет, уменьшенный в 3 раза*/

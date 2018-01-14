@@ -1,9 +1,8 @@
 package items;
 
 import core.Item;
+import core.Player;
 import it.marteEngine.entity.Entity;
-import logic.Monster;
-import logic.Player;
 
 public class Medicine extends Item {
 

@@ -1,11 +1,11 @@
 package scienes;
 
 import core.MyWorld;
-import logic.Player;
+import logic.AgentSasha;
 
 public class FirstOnfall extends MyWorld {
 
-	public FirstOnfall(int id, Player player) {
+	public FirstOnfall(int id, AgentSasha player) {
 		super(id, player);
 		// TODO Auto-generated constructor stub
 	}

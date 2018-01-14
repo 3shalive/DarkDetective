@@ -53,7 +53,7 @@ public class Teleporter extends Entity {
 	
 	@Override
 	public void collisionResponse(Entity other) {
-		if(other instanceof Player){
+		if(other instanceof AgentSasha){
 			if(isAllowed) game.enterState(location);
 			else {
 				renderHint = true;

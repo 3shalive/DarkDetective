@@ -2,11 +2,11 @@ package items;
 
 import core.Item;
 import it.marteEngine.entity.Entity;
-import logic.Player;
+import logic.AgentSasha;
 
 public class Diary extends Item {
 
-	public Diary(Player player) {
+	public Diary(AgentSasha player) {
 		super("Дневник", "textures/MagicBook.png", player);
 		stats.add("Тип: книга");
 		stats.add("Масса: 0.3 кг");
