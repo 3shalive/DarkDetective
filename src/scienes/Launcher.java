@@ -18,7 +18,7 @@ public class Launcher extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
 		AgentSasha player = new AgentSasha(0,0);//инициализация игрока
-//		this.addState(new Prologue(0)); //на время отладки отключена
+		this.addState(new Prologue(0)); //на время отладки отключена
 		this.addState(new Flashback(1, player));
 		this.addState(new Run(2, player));
 		this.addState(new Village(3, player));
@@ -34,7 +34,7 @@ public class Launcher extends StateBasedGame {
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer game = new AppGameContainer(new Launcher("The Beast"));
 //		game.setDisplayMode(512, 512, false); //#нухуйзнает
-		game.setDisplayMode(800, 600, false);
+		game.setDisplayMode(800, 600, true);
 		game.setTargetFrameRate(90);
 		game.start();
 	}
