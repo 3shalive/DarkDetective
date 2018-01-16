@@ -8,13 +8,13 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import it.marteEngine.World;
+import it.marteEngine.entity.Entity;
 import logic.AgentOctavian;
 import logic.AgentSasha;
 import logic.Inventary;
 
 public class MyWorld extends World {
 	
-	protected Player primary_player;
 	protected Image background;
 	public Camera camera;
 	protected boolean showInvent = false;

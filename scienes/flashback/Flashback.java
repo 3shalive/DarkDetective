@@ -1,6 +1,7 @@
 package flashback;
 
 import java.awt.Font;
+import java.util.List;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -16,13 +17,15 @@ import org.newdawn.slick.state.StateBasedGame;
 import core.Camera;
 import core.MyWorld;
 import core.TrueTypeFont;
+import it.marteEngine.World;
 import it.marteEngine.entity.Entity;
 import items.Blant;
 import items.Gun;
 import logic.AgentOctavian;
 import logic.AgentSasha;
-import logic.Tree;
 import logic.Teleporter;
+import logic.Tree;
+
 
 public class Flashback extends MyWorld {
 	public Flashback(int id, AgentSasha sasha) {
@@ -36,7 +39,7 @@ public class Flashback extends MyWorld {
 	Teleporter leave;
 	int map[][];
 	Music leitmotive ;
-	int counter = 0;
+	int counter = 3000;
 	Image firstSlideshow[];
 	Image line;
 	Image big_line;
@@ -47,7 +50,9 @@ public class Flashback extends MyWorld {
 	Font font = new Font("Courier New", Font.PLAIN, 16);
 	TrueTypeFont slicFont = new TrueTypeFont(font, true,
 			("יצףךוםדרשחץתפûגאןנמכהז‎ÿקסלטעüב‏¸".toUpperCase() + "יצףךוםדרשחץתפûגאןנמכהז‎ÿקסלטעüב‏¸").toCharArray());
-
+	Entity primary_entity;
+	
+	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		super.enter(container, game);
@@ -127,7 +132,7 @@ public class Flashback extends MyWorld {
 		add(sasha);
 		add(octavian);
 		add(fireplace);
-		primary_player = octavian;
+		primary_entity = octavian;
 	}
 
 	@Override
@@ -167,6 +172,7 @@ public class Flashback extends MyWorld {
 					g.drawString("Òאך טכט טםאקו, מם נורטכ עמדהא מסלמענועü כוס גמחכו כאדונÿ...", 50,10);
 				}
 			}
+			g.drawString(this.container.getFPS()+"", 10, 10);
 		}
 	}
 
@@ -178,17 +184,26 @@ public class Flashback extends MyWorld {
 		if(counter==600) so2.play();
 		if(counter==1400) so3.play();
 		if(counter==2300) so4.play();
-		
-		if(sasha.y<octavian.y && primary_player instanceof AgentSasha){
-			this.remove(octavian);
-			this.add(octavian);
-			primary_player = octavian;
+		List<Entity> entities = this.getEntities();
+		for(int i = 0; i<entities.size()-1; i++) {
+			Entity en = entities.get(i);
+			if(sasha.y>en.y&&sasha.y<=entities.get(i+1).y) entities.add(i, sasha);
+			if(octavian.y>en.y&&octavian.y<=entities.get(i+1).y) entities.add(i, octavian);
 		}
-		if(octavian.y < sasha.y && primary_player instanceof AgentOctavian){
-			this.remove(sasha);
-			this.add(sasha);
-			primary_player = sasha;
-		} 		
+		this.clear();
+		this.addAll(entities, World.GAME);
+		/*
+			if(sasha.y<octavian.y && primary_entity instanceof AgentSasha){
+				this.remove(octavian);
+				this.add(octavian);
+				primary_entity = octavian;
+			}
+			if(octavian.y < sasha.y && primary_entity instanceof AgentOctavian){
+				this.remove(sasha);
+				this.add(sasha);
+				primary_entity = sasha;
+			} 
+			*/					
 	}
 	
 	@Override

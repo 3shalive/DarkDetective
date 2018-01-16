@@ -28,13 +28,12 @@ public class Launcher extends StateBasedGame {
 		this.addState(new Epilogue(8, player));
 		this.addState(new Death(9));
 		this.addState(new MainMenu(10));
-		enterState(0);//можно изменить id сцены, когда нужно что-то отладить
+		enterState(1);//можно изменить id сцены, когда нужно что-то отладить
 	}
 
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer game = new AppGameContainer(new Launcher("The Beast"));
-//		game.setDisplayMode(512, 512, false); //#нухуйзнает
-		game.setDisplayMode(800, 600, true);
+		game.setDisplayMode(800, 600, false);
 		game.setTargetFrameRate(90);
 		game.start();
 	}
