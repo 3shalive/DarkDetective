@@ -12,7 +12,7 @@ public class Tree extends Entity {
 	
 	public Tree(float x, float y, String type) {
 		super(x, y);
-		setHitBox(0, 0, 64, 85);
+		setHitBox(10, 45, 40, 40);//64x85
 		try {
 			setGraphic(new Image(type));
 			addType(SOLID);

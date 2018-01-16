@@ -40,11 +40,11 @@ public class CrimeSciene extends MyWorld {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		sashasInventary = new Inventary(0, 0, player);
-		sashasInventary.putItem(new Gun(player));
-		sashasInventary.putItem(new Blant(player));
-		sashasInventary.putItem(new Medicine(player));
-		sashasInventary.putItem(new Diary(player));
+		inventary = new Inventary(0, 0, player);
+		inventary.putItem(new Gun(player));
+		inventary.putItem(new Blant(player));
+		inventary.putItem(new Medicine(player));
+		inventary.putItem(new Diary(player));
 		player = new AgentSasha(270, 300);
 		camera = new Camera(player, new Rectangle(0, 0, 920, 800), container);
 	    background = new Image("textures/map2.png");
@@ -101,7 +101,7 @@ public class CrimeSciene extends MyWorld {
 		for(Entity en :this.getEntities()){
 			en.render(container, g);
 		}
-		if(showInvent)sashasInventary.render(container, g);
+		if(showInvent)inventary.render(container, g);
 	}
 		
 	

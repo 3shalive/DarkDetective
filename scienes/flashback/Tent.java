@@ -1,14 +1,10 @@
 package flashback;
 
 
-import java.awt.Font;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.TrueTypeFont;
 
 import it.marteEngine.entity.Entity;
 
@@ -18,16 +14,11 @@ public class Tent extends Entity {
 	int time4hint = 0;
 	Image graphic;
 	GameContainer container;
-	boolean isAllowed2Draw = false;
-	boolean isAllowed2DrawHint = false;
-	Font font = new Font("Courier New", Font.PLAIN, 14);
-	TrueTypeFont slicFont = new TrueTypeFont(font, true,("йцукенгшщзхъфывапролджэ€чсмитьбю".toUpperCase()+"йцукенгшщзхъфывапролджэ€чсмитьбю").toCharArray());
-	
 	
 	public Tent(float x, float y) throws SlickException {
 		super(x, y);
 		graphic = new Image("textures/tent.png");
-		setHitBox(0, 0, 125, 100);
+		setHitBox(15, 40, 90, 45);
 		addType(SOLID);
 	}
 	
@@ -35,18 +26,9 @@ public class Tent extends Entity {
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		if(graphic!=null) g.drawImage(graphic, x, y);
 		else System.err.println("Tent's image is null");
-		g.setFont(slicFont);
 		this.container = container;
-		if(isAllowed2Draw&&time>0)g.drawString("Ёта палатка давно заброшена, и тут ничего нет", x-50, y + 50);
-		if(isAllowed2DrawHint&&time4hint>0)g.drawString("ќсмотреть <Enter>", x-50, y -20);
 	}
-	
-	@Override
-	public void collisionResponse(Entity other) {
-		isAllowed2DrawHint = true;
-		time4hint = 2000;
-	}
-	
+
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		time4hint -= delta;
@@ -54,10 +36,8 @@ public class Tent extends Entity {
 		if((collide(PLAYER, x+10, y+10)!=null)
 				||(collide(PLAYER, x-10, y-10)!=null)
 				||(collide(PLAYER, x+10, y-10)!=null)
-				||(collide(PLAYER, x-10, y+10)!=null))
-			if(container.getInput().isKeyPressed(Input.KEY_ENTER)){
-				isAllowed2Draw = true;
-				time = 2500;
-			}
+				||(collide(PLAYER, x-10, y+10)!=null)){
+			//collision!
+		}
 		}
 }

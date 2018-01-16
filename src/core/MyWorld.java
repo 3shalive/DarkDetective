@@ -8,7 +8,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import it.marteEngine.World;
-import it.marteEngine.entity.Entity;
 import logic.AgentOctavian;
 import logic.AgentSasha;
 import logic.Inventary;
@@ -18,7 +17,7 @@ public class MyWorld extends World {
 	protected Image background;
 	public Camera camera;
 	protected boolean showInvent = false;
-	protected Inventary sashasInventary;
+	protected Inventary inventary;
 	public AgentSasha sasha;
 	public AgentOctavian octavian;
 	public int hours = 12;
@@ -41,7 +40,7 @@ public class MyWorld extends World {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		sashasInventary = sasha.invent;
+		inventary = sasha.invent;
 		this.game = game;
 	}
 	
@@ -50,7 +49,7 @@ public class MyWorld extends World {
 		super.render(container, game, g);
 		if(camera!=null)camera.draw(container, g);
 		if(background!=null)background.draw(0, 0);
-		if(showInvent)sashasInventary.render(container, g);
+		if(showInvent)inventary.render(container, g);
 		if(hours<=12) g.drawString(days[day]+" "+hours+":"+minutes+" am", sasha.x+140, sasha.y-240);
 		else g.drawString(days[day]+" "+ (hours-12)+":"+minutes+" pm", sasha.x+140, sasha.y-240);
 	}

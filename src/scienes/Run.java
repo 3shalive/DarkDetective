@@ -41,10 +41,10 @@ public class Run extends MyWorld {
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		sashasInventary.putItem(new Gun(player));
-		sashasInventary.putItem(new Blant(player));
-		sashasInventary.putItem(new Medicine(player));
-		sashasInventary.putItem(new Diary(player));
+		inventary.putItem(new Gun(player));
+		inventary.putItem(new Blant(player));
+		inventary.putItem(new Medicine(player));
+		inventary.putItem(new Diary(player));
 		player = new AgentSasha(270, 1500);
 		camera = new Camera(player, new Rectangle(0, 0, 560, 1800), container);
 	    background = new Image("textures/map2.png");
@@ -87,7 +87,7 @@ public class Run extends MyWorld {
 		for(Entity en :this.getEntities()){
 			en.render(container, g);
 		}
-		if(showInvent)sashasInventary.render(container, g);
+		if(showInvent)inventary.render(container, g);
 		if(showMessage)g.drawString("RUN", player.x, player.y+100);
 	}
 		
