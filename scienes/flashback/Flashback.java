@@ -14,6 +14,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 import core.Camera;
+import core.FreeFormForestGenerator;
 import core.MyWorld;
 import core.TrueTypeFont;
 import it.marteEngine.entity.Entity;
@@ -32,7 +33,7 @@ public class Flashback extends MyWorld {
 	}
 
 	Car car;
-	Tent tent;
+	Entity tent;
 	Fireplace fireplace;
 	Teleporter enter;
 	Teleporter leave;
@@ -73,7 +74,10 @@ public class Flashback extends MyWorld {
 		background = new Image("textures/darkmap.png");
 		car = new Car(sasha.x - 100, sasha.y + 150);
 		fireplace = new Fireplace(550, 350);
-		tent = new Tent(600, 250);
+		tent = new Entity(600, 250) {};
+		tent.setGraphic(new Image("textures/tent.png"));
+		tent.setHitBox(15, 40, 90, 45);
+		tent.addType(Entity.SOLID);
 		leave = new Teleporter(240, 0, 400, 40, 2, game);
 		enter = new Teleporter(520, 680, 120, 40, 2, game);
 		enter.setAllowed(false, "Нет смысла возвращаться");
@@ -147,7 +151,7 @@ public class Flashback extends MyWorld {
 		g.setColor(Color.black);
 		if(counter>2700){
 		super.render(container, game, g);
-		g.setColor(Color.black);
+		g.setColor(Color.green);
 		g.drawString(this.container.getFPS()+"", 10, 10);
 		g.drawImage(lol, 520, 315);
 		for (Entity en : this.getEntities()) {
@@ -212,8 +216,9 @@ public class Flashback extends MyWorld {
 				this.add(sasha);
 				primary_entity = sasha;
 			} 
-							
+			
 	}
+
 	
 	@Override
 	public void keyPressed(int key, char c) {
