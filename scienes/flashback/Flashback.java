@@ -14,6 +14,7 @@ import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
 import core.Camera;
+import core.FreeFormForestGenerator;
 import core.MyWorld;
 import core.TrueTypeFont;
 import it.marteEngine.entity.Entity;
@@ -21,8 +22,10 @@ import items.Blant;
 import items.Gun;
 import logic.AgentOctavian;
 import logic.AgentSasha;
-import logic.Tree;
+import logic.Bush;
 import logic.Teleporter;
+import logic.Tree;
+
 
 public class Flashback extends MyWorld {
 	public Flashback(int id, AgentSasha sasha) {
@@ -30,16 +33,17 @@ public class Flashback extends MyWorld {
 	}
 
 	Car car;
-	Tent tent;
+	Entity tent;
 	Fireplace fireplace;
 	Teleporter enter;
 	Teleporter leave;
 	int map[][];
 	Music leitmotive ;
-	int counter = 0;
+	int counter = 3000;
 	Image firstSlideshow[];
 	Image line;
 	Image big_line;
+	Image lol;
 	Sound so1;
 	Sound so2;
 	Sound so3;
@@ -47,13 +51,14 @@ public class Flashback extends MyWorld {
 	Font font = new Font("Courier New", Font.PLAIN, 16);
 	TrueTypeFont slicFont = new TrueTypeFont(font, true,
 			("йцукенгшщзхъфывапролджэ€чсмитьбюЄ".toUpperCase() + "йцукенгшщзхъфывапролджэ€чсмитьбюЄ").toCharArray());
-
+	Entity primary_entity;
+	
+	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		super.enter(container, game);
 		leitmotive = new Music("data/Flashback.ogg");
-		leitmotive.loop();
-		leitmotive.play();
+		//leitmotive.loop();
 	}
 	
 	@Override
@@ -63,20 +68,23 @@ public class Flashback extends MyWorld {
 		sasha.y = (container.getHeight() + 30) / 2;
 		octavian.x = (container.getWidth() + 30) / 2 + 100;
 		octavian.y = (container.getHeight() + 330) / 2 + 100;
-		sashasInventary.putItem(new Gun(sasha));
-		sashasInventary.putItem(new Blant(octavian));
+		inventary.putItem(new Gun(sasha));
+		inventary.putItem(new Blant(octavian));
 		camera = new Camera(sasha, new Rectangle(0, 0, 880, 720), container);
 		background = new Image("textures/darkmap.png");
 		car = new Car(sasha.x - 100, sasha.y + 150);
 		fireplace = new Fireplace(550, 350);
-		tent = new Tent(600, 250);
+		tent = new Entity(600, 250) {};
+		tent.setGraphic(new Image("textures/tent.png"));
+		tent.setHitBox(15, 40, 90, 45);
+		tent.addType(Entity.SOLID);
 		leave = new Teleporter(240, 0, 400, 40, 2, game);
 		enter = new Teleporter(520, 680, 120, 40, 2, game);
 		enter.setAllowed(false, "Ќет смысла возвращатьс€");
 		leave.setAllowed(true, "—начала нужно все обыскать");
 		Image[] tempArray = {
 				new Image("flashback_intro1.png"),
-				new Image("flashback_intro2.png"),
+				new Image("flashback_intro2.png"), 
 				new Image("flashback_intro3.png")
 				};
 		firstSlideshow = tempArray;
@@ -86,37 +94,44 @@ public class Flashback extends MyWorld {
 		so2 = new Sound("flashback2.ogg");
 		so3 = new Sound("flashback3.ogg");
 		so4 = new Sound("flashback4.ogg");
+		lol = new Image("textures/lol.png");
 		enter.debug = false;
 		leave.debug = false;
 		sasha.debug = true;
 		octavian.debug = true;
 		int map[][] = { { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 				{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-				{ 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 },
-				{ 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-				{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-				{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-				{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+				{ 1, 1, 1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 0, 1, 1, 1, 1 },
+				{ 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 1, 1 },
+				{ 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
+				{ 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1 },
+				{ 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1 },
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1 },
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1 },
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1 },
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1 },
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1 },
 				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 				{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
 				{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
 				{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-				{ 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-				{ 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1 },
+				{ 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 1 },
+				{ 1, 1, 1, 0, 0, 3, 3, 3, 0, 0, 0, 0, 0, 3, 3, 1, 1, 1 },
 				{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 				{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 } };
+
 		for (int i = 0; i < 22; i++) {
 			for (int j = 0; j < 18; j++) {
-				if (map[i][j] == 1) {
-					add(new Tree(40 * i, 40 * j, Tree.DARK));
-				}
+				if (map[i][j] == 2) add(new Bush(40 * i, 40 * j, Bush.LIGHT));	
+				if (map[i][j] == 3) add(new Bush(40 * i, 40 * j, Bush.LIGHT_VERT));	
+			}
+		}
+
+		for (int i = 0; i < 22; i++) {
+			for (int j = 0; j < 18; j++) {
+				if (map[i][j] == 1) add(new Tree(40 * i, 40 * j, Tree.DARK));
 			}
 		}
 		this.map = map;
@@ -127,7 +142,7 @@ public class Flashback extends MyWorld {
 		add(sasha);
 		add(octavian);
 		add(fireplace);
-		primary_player = octavian;
+		primary_entity = octavian;
 	}
 
 	@Override
@@ -136,12 +151,14 @@ public class Flashback extends MyWorld {
 		g.setColor(Color.black);
 		if(counter>2700){
 		super.render(container, game, g);
-		g.setColor(Color.black);
+		g.setColor(Color.green);
+		g.drawString(this.container.getFPS()+"", 10, 10);
+		g.drawImage(lol, 520, 315);
 		for (Entity en : this.getEntities()) {
 			en.render(container, g);
 		}
 		if (showInvent)
-			sashasInventary.render(container, g);
+			inventary.render(container, g);
 		}else{
 			if(counter<600){
 				g.drawImage(firstSlideshow[0], 0, 0);
@@ -167,6 +184,7 @@ public class Flashback extends MyWorld {
 					g.drawString("“ак или иначе, он решил тогда осмотреть лес возле лагер€...", 50,10);
 				}
 			}
+
 		}
 	}
 
@@ -178,18 +196,29 @@ public class Flashback extends MyWorld {
 		if(counter==600) so2.play();
 		if(counter==1400) so3.play();
 		if(counter==2300) so4.play();
-		
-		if(sasha.y<octavian.y && primary_player instanceof AgentSasha){
-			this.remove(octavian);
-			this.add(octavian);
-			primary_player = octavian;
+/*		List<Entity> entities = this.getEntities();
+		for(int i = 0; i<entities.size()-1; i++) {
+			Entity en = entities.get(i);
+			if(sasha.y>en.y&&sasha.y<=entities.get(i+1).y) entities.add(i, sasha);
+			if(octavian.y>en.y&&octavian.y<=entities.get(i+1).y) entities.add(i, octavian);
 		}
-		if(octavian.y < sasha.y && primary_player instanceof AgentOctavian){
-			this.remove(sasha);
-			this.add(sasha);
-			primary_player = sasha;
-		} 		
+		this.clear();
+		this.addAll(entities, World.GAME);
+		*/
+		
+			if(sasha.y<octavian.y && primary_entity instanceof AgentSasha){
+				this.remove(octavian);
+				this.add(octavian);
+				primary_entity = octavian;
+			}
+			if(octavian.y < sasha.y && primary_entity instanceof AgentOctavian){
+				this.remove(sasha);
+				this.add(sasha);
+				primary_entity = sasha;
+			} 
+			
 	}
+
 	
 	@Override
 	public void keyPressed(int key, char c) {

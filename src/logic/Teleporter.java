@@ -12,6 +12,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import it.marteEngine.entity.Entity;
 
+
+@Deprecated 
 public class Teleporter extends Entity {
 	
 	public int location;
