@@ -1,4 +1,4 @@
-package owlstests;
+package experimental;
 
 import java.io.IOException;
 
@@ -28,5 +28,3 @@ public class Launcher extends StateBasedGame{
 		game.start();
 	}
 }
-
-

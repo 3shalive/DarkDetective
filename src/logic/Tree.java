@@ -29,7 +29,7 @@ public class Tree extends Entity {
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		super.render(container, g);
-		g.draw(rect);
+//		g.draw(rect);
 	}
 	
 	@Override

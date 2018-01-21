@@ -34,7 +34,7 @@ public class Run extends MyWorld {
 	VoidMonster monster;
 	int map[][];
 	boolean showMessage = false;
-	Font font = new Font("Courier New", Font.BOLD, 72);
+	Font font = new Font("Courier New", Font.BOLD, 42);
 	TrueTypeFont slicFont = new TrueTypeFont(font, true,("יצףךוםדרשחץתפûגאןנמכהז‎ÿקסלטעüב‏¸".toUpperCase()+"יצףךוםדרשחץתפûגאןנמכהז‎ÿקסלטעüב‏¸").toCharArray());
 
 	

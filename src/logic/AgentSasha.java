@@ -28,7 +28,6 @@ public class AgentSasha extends Player{
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		super.render(container, g);
-		g.drawString("x="+x+" y="+y, x, y-10);
 	}
 	
 	@Override
