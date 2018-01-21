@@ -22,7 +22,7 @@ public class MyWorld extends World {
 	public Player player;
 	public int hours = 12;
 	public int minutes = 0;
-	public int sec = 0;
+	public int sec = 0; private int tempTime;
 	private int day = 0;
 	String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 	
@@ -62,18 +62,19 @@ public class MyWorld extends World {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		super.update(container, game, delta);
-		sec++;
+		sec=(int)(tempTime+=delta)*6/100;
 		
 		if(sec>=60) {
 			minutes++;
-			sec=0;
+			tempTime-=1000;
+			sec-=60;
 		}
 		if(minutes>=60) {
 			hours++;
-			minutes=0;
+			minutes-=60;
 		}
 		if(hours>=24){
-			hours=0;
+			hours-=024;
 			day++;
 		}
 		if(day>6) day = 0;

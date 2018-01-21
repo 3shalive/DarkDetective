@@ -17,7 +17,7 @@ public class Launcher extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer container) throws SlickException {
 		Player player = new Player(0,0);//инициализация игрока
-		this.addState(new Prologue(0));
+		this.addState(new Intro(0));
 		this.addState(new Flashback(1, player));
 		this.addState(new Run(2, player));
 		this.addState(new Village(3, player));
