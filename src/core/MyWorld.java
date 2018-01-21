@@ -1,7 +1,5 @@
 package core;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.newdawn.slick.GameContainer;
@@ -16,7 +14,6 @@ import it.marteEngine.entity.Entity;
 import logic.AgentOctavian;
 import logic.AgentSasha;
 import logic.Inventary;
-import logic.Tree;
 
 public class MyWorld extends World {
 	
@@ -117,10 +114,9 @@ public class MyWorld extends World {
 					list.add(list.indexOf(octavian), en);
 				}
 			} catch (IndexOutOfBoundsException e) {
+				System.out.println(e.getMessage());
 				System.out.println("чота с индексами, но как-то похуй вообще");
 			}
 		}
 	}
-	
-	
 }
