@@ -1,4 +1,4 @@
-package owlstests;
+package experimental;
 
 import im.bci.tmxloader.TmxLoader;
 import im.bci.tmxloader.TmxMap;
