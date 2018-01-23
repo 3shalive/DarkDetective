@@ -18,34 +18,34 @@ import items.Blant;
 import items.Diary;
 import items.Gun;
 import items.Medicine;
-import logic.LightTree;
-import logic.Player;
+import logic.Tree;
+import logic.AgentSasha;
 import logic.Teleporter;
 import logic.VoidMonster;
 
 public class Run extends MyWorld {
-	public Run(int id,Player player) {
+	public Run(int id,AgentSasha player) {
 		super(id, player);
 	}
 
-	Player player;
+	AgentSasha player;
 	Teleporter leave;
 	Image pic;
 	VoidMonster monster;
 	int map[][];
 	boolean showMessage = false;
-	Font font = new Font("Courier New", Font.BOLD, 72);
+	Font font = new Font("Courier New", Font.BOLD, 42);
 	TrueTypeFont slicFont = new TrueTypeFont(font, true,("יצףךוםדרשחץתפûגאןנמכהז‎ÿקסלטעüב‏¸".toUpperCase()+"יצףךוםדרשחץתפûגאןנמכהז‎ÿקסלטעüב‏¸").toCharArray());
 
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		invent.putItem(new Gun(player));
-		invent.putItem(new Blant(player));
-		invent.putItem(new Medicine(player));
-		invent.putItem(new Diary(player));
-		player = new Player(270, 1500);
+		inventary.putItem(new Gun(player));
+		inventary.putItem(new Blant(player));
+		inventary.putItem(new Medicine(player));
+		inventary.putItem(new Diary(player));
+		player = new AgentSasha(270, 1500);
 		camera = new Camera(player, new Rectangle(0, 0, 560, 1800), container);
 	    background = new Image("textures/map2.png");
 	    pic = background;
@@ -70,7 +70,7 @@ public class Run extends MyWorld {
 		for(int i = 0; i<14; i++){
 			for(int j = 0; j<36; j++){
 				if(map[i][j]==1){
-					add(new LightTree(40*i, 50*j));
+					add(new Tree(40*i, 50*j, Tree.LIGHT));
 				}	    		
 			}
 		}
@@ -87,7 +87,7 @@ public class Run extends MyWorld {
 		for(Entity en :this.getEntities()){
 			en.render(container, g);
 		}
-		if(showInvent)invent.render(container, g);
+		if(showInvent)inventary.render(container, g);
 		if(showMessage)g.drawString("RUN", player.x, player.y+100);
 	}
 		

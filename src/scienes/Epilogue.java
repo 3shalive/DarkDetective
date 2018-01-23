@@ -1,11 +1,11 @@
 package scienes;
 
 import core.MyWorld;
-import logic.Player;
+import logic.AgentSasha;
 
 public class Epilogue extends MyWorld {
 
-	public Epilogue(int id, Player player) {
+	public Epilogue(int id, AgentSasha player) {
 		super(id, player);
 		// TODO Auto-generated constructor stub
 	}
