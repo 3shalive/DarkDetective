@@ -12,6 +12,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import it.marteEngine.entity.Entity;
 
+
+@Deprecated 
 public class Teleporter extends Entity {
 	
 	public int location;
@@ -53,7 +55,7 @@ public class Teleporter extends Entity {
 	
 	@Override
 	public void collisionResponse(Entity other) {
-		if(other instanceof Player){
+		if(other instanceof AgentSasha){
 			if(isAllowed) game.enterState(location);
 			else {
 				renderHint = true;
