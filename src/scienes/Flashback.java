@@ -1,7 +1,5 @@
 package scienes;
 
-import java.awt.Font;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -14,7 +12,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import core.Camera;
 import core.MyWorld;
-import core.TrueTypeFont;
 import it.marteEngine.entity.Entity;
 import logic.AgentSasha;
 import logic.Bush;
@@ -32,7 +29,6 @@ public class Flashback extends MyWorld {
 	Entity fireplace;
 	int map[][];
 	Music leitmotive;
-	int counter = 3000;
 	Image firstSlideshow[];
 	Image line;
 	Image big_line;
@@ -42,10 +38,6 @@ public class Flashback extends MyWorld {
 	Bush[] bush = new Bush[4];
 	Sound[] sound_lib = new Sound[4];
 	boolean pause = false;
-	Font font = new Font("Courier New", Font.PLAIN, 16);
-	TrueTypeFont slicFont = new TrueTypeFont(font, true,
-			("йцукенгшщзхъфывапролджэ€чсмитьбюЄ".toUpperCase() + "йцукенгшщзхъфывапролджэ€чсмитьбюЄ").toCharArray());
-
 
 	
 //97 | 426
@@ -54,6 +46,7 @@ public class Flashback extends MyWorld {
 		super.enter(container, game);
 		leitmotive = new Music("data/Flashback.ogg");
 		//leitmotive.loop();
+		counter = 3000;
 	}
 
 	@Override
@@ -185,7 +178,7 @@ public class Flashback extends MyWorld {
 		if(pause) {
 			getEntities().remove(bushevent);
 			g.drawImage(bushimage, octavian.x-140, octavian.y-290);
-			counter++;
+			counter++;//TODO: присобачить сюда дельту
 			if(counter>3500) pause = false;
 		}
 	}
@@ -194,7 +187,7 @@ public class Flashback extends MyWorld {
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if(!pause) {
 			super.update(container, game, delta);
-			counter++;
+			counter+=1;//TODO: присобачить сюда дельту и помен€ть тайминги
 			if (counter == 70)
 				sound_lib[0].play();
 			if (counter == 600)
