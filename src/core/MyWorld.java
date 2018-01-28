@@ -1,5 +1,6 @@
 package core;
 
+import java.awt.Font;
 import java.util.List;
 
 import org.newdawn.slick.GameContainer;
@@ -17,7 +18,10 @@ import logic.Inventary;
 import scienes.Launcher;
 
 public class MyWorld extends World {
-	
+
+	/*TODO: повыпиливать лишнее из проекта
+	 * и написать документацию к сложным участкам кода
+	 * */
 	protected Image background;
 	public Camera camera;
 	protected boolean showInvent = false;
@@ -26,11 +30,17 @@ public class MyWorld extends World {
 	public static AgentOctavian octavian;
 	public int hours = 12;
 	public int minutes = 0;
-	public int sec = 0; private int tempTime;
+	public int sec = 0; 
+	private int tempTime;
 	private int day = 0;
-	protected Entity primary_entity;
+	/**—тандартный счетчик*/
+	protected int counter = 0;
 	public StateBasedGame game;
 	String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+	protected Font font = new Font("Courier New", Font.PLAIN, 16);
+	protected TrueTypeFont slicFont = new TrueTypeFont(font, true,
+			("йцукенгшщзхъфывапролджэ€чсмитьбюЄ".toUpperCase() + "йцукенгшщзхъфывапролджэ€чсмитьбюЄ").toCharArray());
+	
 	
 	public MyWorld(int id) {
 		super(id);
@@ -46,6 +56,7 @@ public class MyWorld extends World {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		super.render(container, game, g);
+		g.setFont(slicFont);
 		if(camera!=null)camera.draw(container, g);
 		if(background!=null)background.draw(0, 0);
 		if(showInvent)inventary.render(container, g);

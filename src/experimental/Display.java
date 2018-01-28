@@ -33,7 +33,7 @@ public class Display extends World {
 	Font font = new Font("Courier New", Font.PLAIN, 16);
 	TrueTypeFont slicFont = new TrueTypeFont(font, true,
 			("יצףךוםדרשחץתפûגאןנמכהז‎ÿקסלטעüב‏¸".toUpperCase() + "יצףךוםדרשחץתפûגאןנמכהז‎ÿקסלטעüב‏¸").toCharArray());
-
+	
 	public Display(int id) {
 		super(id);
 
@@ -57,7 +57,7 @@ public class Display extends World {
 		filewriter = new Write2File();
 		car = new Car(400, 50);
 	}
-
+	
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		// super.render(container, game, g);
@@ -105,8 +105,10 @@ public class Display extends World {
 			//ךמנמקו, סמנעטנףול Y, ט ןמעמל ןמ Y טשול ודמ גכאהוכüצא, ט ןנטסגאטגאול ולף depth = i
 			generateMOAR--;
 		}
+		
 		Random rand = new Random();
 		if(generateMOAR<=0)this.getEntities().get(rand.nextInt(10)).depth = rand.nextInt(10);
+		
 	}
 
 	@Override
@@ -129,4 +131,10 @@ public class Display extends World {
 		
 	}
 
+	@Override
+	public void mouseMoved(int oldx, int oldy, int newx, int newy) {
+		super.mouseMoved(oldx, oldy, newx, newy);
+		
+	}
+	
 }
