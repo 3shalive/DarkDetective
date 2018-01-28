@@ -27,6 +27,10 @@ public class Launcher extends StateBasedGame {
 	public void initStatesList(GameContainer container) throws SlickException {
 		MyWorld.sasha = new AgentSasha(400, 400);
 		MyWorld.octavian = new AgentOctavian(400, 400);
+		/*
+		 * Инициализация сцены подразумевает запуск её init-а
+		 * Не задавайте параметры игроков в этом методе - изменения отразятся на всех сценах!
+		 */
 		this.addState(new Prologue(PROLOGUE));
 		this.addState(new Flashback(FLASHBACK));
 		this.addState(new Run(RUN));
@@ -38,7 +42,7 @@ public class Launcher extends StateBasedGame {
 
 	public static void main(String[] args) throws SlickException {
 		AppGameContainer game = new AppGameContainer(new Launcher("The Beast"));
-		game.setDisplayMode(800, 600, false); // TODO: в релизных и демо версиях использовать (800, 600, true)
+		game.setDisplayMode(800, 600, false);
 		game.setTargetFrameRate(60);
 		game.start();
 	}

@@ -14,10 +14,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import core.Camera;
 import core.MyWorld;
 import it.marteEngine.entity.Entity;
-import items.Blant;
-import items.Diary;
-import items.Gun;
-import items.Medicine;
 import logic.Teleporter;
 import logic.Tree;
 import logic.VoidMonster;
@@ -37,15 +33,17 @@ public class Run extends MyWorld {
 
 	
 	@Override
+	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+		super.enter(container, game);
+		octavian.x = 270;
+		octavian.y = 1400;
+	    add(octavian);
+		camera = new Camera(octavian, new Rectangle(0, 0, 560, 1800), container);
+	}
+	
+	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		octavian.x = 270;
-		octavian.y = 1500;
-		inventary.putItem(new Gun(octavian));
-		inventary.putItem(new Blant(octavian));
-		inventary.putItem(new Medicine(octavian));
-		inventary.putItem(new Diary(octavian));
-		camera = new Camera(octavian, new Rectangle(0, 0, 560, 1800), container);
 	    background = new Image("textures/map2.png");
 	    pic = background;
 	    leave = new Teleporter(240, 0, 400, 40, 3, game);
@@ -74,7 +72,6 @@ public class Run extends MyWorld {
 			}
 		}
 		this.map = map;
-	    add(octavian);
 	}
 
 	@Override
@@ -100,7 +97,6 @@ public class Run extends MyWorld {
 			octavian.speed = 2;
 		}
 		if(octavian.y<800) showMessage = false;
-		System.out.println("octavian.y: "+octavian.y);
 		if(monster!=null)System.out.println("monster.y: "+monster.y);
 	}
 	

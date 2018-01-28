@@ -86,7 +86,6 @@ public class MyWorld extends World {
 		List<Entity> list = getEntities();
 		for (int i = 0; i < list.size() - 1; i++) {
 			Entity en = list.get(i);
-			/*===
 			try {
 				if (en.y > sasha.y) {
 					if (i < list.indexOf(sasha)) {
@@ -111,7 +110,6 @@ public class MyWorld extends World {
 				System.out.println(e.getMessage());
 				System.out.println("чота с индексами, но как-то похуй вообще");
 			}
-*/
 		}
 	}
 }
