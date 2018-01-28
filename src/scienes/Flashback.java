@@ -16,6 +16,7 @@ import core.Camera;
 import core.MyWorld;
 import core.TrueTypeFont;
 import it.marteEngine.entity.Entity;
+import logic.AgentOctavian;
 import logic.AgentSasha;
 import logic.Bush;
 import logic.Tree;
@@ -23,8 +24,8 @@ import logic.Trigger;
 
 public class Flashback extends MyWorld {
 	
-	public Flashback(int id, AgentSasha sasha) {
-		super(id, sasha);
+	public Flashback(int id) {
+		super(id);
 	}
 
 	Entity car;
@@ -59,11 +60,11 @@ public class Flashback extends MyWorld {
 	@Override
 	public void init(final GameContainer container, final StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		sasha.x = 100;
+		sasha.x = 400; 
 		sasha.y = -100;//фикс бага иерархии отрисовки виртуальным сашей
-		octavian.x = 440;
-		octavian.y = 400;
-		camera = new Camera(octavian, new Rectangle(0, 0, 990, 810), container);
+		octavian.x = 550;
+		octavian.y = 300;
+		octavian.debug = true;
 		background = new Image("textures/darkmap.png");
 		car = new Entity(container.getWidth() + 30 / 2 - 100, (container.getHeight() + 30) / 2 + 150) {};
 		car.setGraphic(new Image("textures/car.png"));
@@ -77,6 +78,8 @@ public class Flashback extends MyWorld {
 		tent.setGraphic(new Image("textures/tent.png"));
 		tent.setHitBox(15, 40, 90, 45);
 		tent.addType(Entity.SOLID);
+
+		camera = new Camera(fireplace, new Rectangle(0, 0, 990, 810), container);
 		Image[] tempArray = { new Image("flashback_intro1.png"), new Image("flashback_intro2.png"),
 				new Image("flashback_intro3.png") };
 		firstSlideshow = tempArray;
@@ -99,7 +102,7 @@ public class Flashback extends MyWorld {
 				try {
 					pause = true;
 					bushimage = new Image("textures/beast_bush1.png");
-					counter = 3000;
+					counter = 3000; 
 				} catch (SlickException e) {
 					e.printStackTrace();
 				}
