@@ -1,7 +1,5 @@
 package core;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.newdawn.slick.GameContainer;
@@ -16,7 +14,7 @@ import it.marteEngine.entity.Entity;
 import logic.AgentOctavian;
 import logic.AgentSasha;
 import logic.Inventary;
-import logic.Tree;
+import scienes.Launcher;
 
 public class MyWorld extends World {
 	
@@ -24,30 +22,24 @@ public class MyWorld extends World {
 	public Camera camera;
 	protected boolean showInvent = false;
 	protected Inventary inventary;
-	public AgentSasha sasha;
-	public AgentOctavian octavian;
+	public static AgentSasha sasha;
+	public static AgentOctavian octavian;
 	public int hours = 12;
 	public int minutes = 0;
-	public int sec = 0;
+	public int sec = 0; private int tempTime;
 	private int day = 0;
 	protected Entity primary_entity;
 	public StateBasedGame game;
 	String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 	
-	public MyWorld(int id, AgentSasha sasha) {
+	public MyWorld(int id) {
 		super(id);
-		this.sasha = sasha;
-		try {
-			octavian = new AgentOctavian(0, 0);
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		inventary = sasha.invent;
+		inventary = octavian.invent;
 		this.game = game;
 	}
 	
@@ -61,12 +53,11 @@ public class MyWorld extends World {
 		else g.drawString(days[day]+" "+ (hours-12)+":"+minutes+" pm", sasha.x+140, sasha.y-240);
 	}
 	
-
 	@Override
 	public void keyPressed(int key, char c) {
 		super.keyPressed(key, c);
 		if (key == Input.KEY_ESCAPE) {
-			game.enterState(10);
+			game.enterState(Launcher.MENU_SCREEN);
 		}
 		if(key==Input.KEY_TAB) showInvent = !showInvent; 
 		sasha.invent.keyPressed(key);
@@ -75,18 +66,18 @@ public class MyWorld extends World {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		super.update(container, game, delta);
-		//каскадный таймер
-		sec++;
+		sec=(int)(tempTime+=delta)*6/100;
 		if(sec>=60) {
 			minutes++;
-			sec=0;
+			tempTime-=1000;
+			sec-=60;
 		}
 		if(minutes>=60) {
 			hours++;
-			minutes=0;
+			minutes-=60;
 		}
 		if(hours>=24){
-			hours=0;
+			hours-=024;
 			day++;
 		}
 		if(day>6) day = 0;
@@ -95,7 +86,6 @@ public class MyWorld extends World {
 		List<Entity> list = getEntities();
 		for (int i = 0; i < list.size() - 1; i++) {
 			Entity en = list.get(i);
-			// ===
 			try {
 				if (en.y > sasha.y) {
 					if (i < list.indexOf(sasha)) {
@@ -117,10 +107,9 @@ public class MyWorld extends World {
 					list.add(list.indexOf(octavian), en);
 				}
 			} catch (IndexOutOfBoundsException e) {
+				System.out.println(e.getMessage());
 				System.out.println("чота с индексами, но как-то похуй вообще");
 			}
 		}
 	}
-	
-	
 }

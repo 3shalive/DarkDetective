@@ -32,8 +32,7 @@ public class Prologue extends World {
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
 		Music music = new Music("data/Light.ogg");
-		music.play();
-		music.loop();
+//		music.loop();
 		mass[0] = new Image("char.png");
 		mass[1] = new Image("Gear.jpg");
 		mass[2] = new Image("lost_car.png");

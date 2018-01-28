@@ -65,11 +65,13 @@ public Inventary(float x, float y, Player player2) throws SlickException {
 		if(key==Input.KEY_ENTER&&currentItem!=null){
 			currentItem.effect(player);
 		}
-		if(key==Input.KEY_DOWN){
+		//if(key==Input.KEY_DOWN){
+		if(key==Input.KEY_F){
 			if((idx+1)<inventList.size()) currentItem = inventList.get(++idx);
 			else currentItem = inventList.get(inventList.size()-1);
 		}
-		if(key==Input.KEY_UP){
+		//if(key==Input.KEY_UP){
+		if(key==Input.KEY_R){
 			if(idx>0) currentItem = inventList.get(--idx);
 			else currentItem = inventList.get(0);
 		}

@@ -20,7 +20,7 @@ public class Camera {
 	private Vector2f OutOfBounds = new Vector2f();
 	private GameContainer container;
 	
-	public Camera(Entity toFollow, Rectangle bounds, GameContainer container) {
+	public Camera(Entity toFollow, Rectangle bounds, GameContainer container) {//игрок карта окно
 		this.toFollow = toFollow;
 		this.bounds = bounds;
 		position = new Vector2f(bounds.getX(), bounds.getY());

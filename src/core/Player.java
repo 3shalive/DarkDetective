@@ -33,7 +33,10 @@ public class Player extends Entity{
 	
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		if(debug)g.draw(debugBounds);
+		if(debug) {
+			g.draw(debugBounds);
+			g.drawString(x+"|"+y, x-40, y-30);
+		}
 		g.drawImage(player, x, y);
 	}
 	

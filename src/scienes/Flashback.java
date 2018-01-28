@@ -16,53 +16,60 @@ import core.Camera;
 import core.MyWorld;
 import core.TrueTypeFont;
 import it.marteEngine.entity.Entity;
-import items.Blant;
-import items.Gun;
+import logic.AgentOctavian;
 import logic.AgentSasha;
+import logic.Bush;
 import logic.Tree;
 import logic.Trigger;
 
 public class Flashback extends MyWorld {
-	public Flashback(int id, AgentSasha sasha) {
-		super(id, sasha);
+	
+	public Flashback(int id) {
+		super(id);
 	}
 
 	Entity car;
 	Entity tent;
 	Entity fireplace;
-	Trigger run_port;
 	int map[][];
 	Music leitmotive;
-	int counter = 0;
+	int counter = 3000;
 	Image firstSlideshow[];
 	Image line;
 	Image big_line;
 	Image lol;
+	Image bushimage;
+	Trigger bushevent;
+	Bush[] bush = new Bush[4];
 	Sound[] sound_lib = new Sound[4];
+	boolean pause = false;
 	Font font = new Font("Courier New", Font.PLAIN, 16);
 	TrueTypeFont slicFont = new TrueTypeFont(font, true,
 			("йцукенгшщзхъфывапролджэ€чсмитьбюЄ".toUpperCase() + "йцукенгшщзхъфывапролджэ€чсмитьбюЄ").toCharArray());
-	
 
+
+	
+//97 | 426
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		super.enter(container, game);
+		octavian.x = 430;
+		octavian.y = 400;
+		octavian.debug = true;
+		add(octavian);
+		camera = new Camera(octavian, new Rectangle(0, 0, 990, 810), container);
 		leitmotive = new Music("data/Flashback.ogg");
-		leitmotive.loop();
+		//leitmotive.loop();
 	}
 
 	@Override
-	public void init(GameContainer container, final StateBasedGame game) throws SlickException {
+	public void init(final GameContainer container, final StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		sasha.x = (container.getWidth() + 30) / 2;
-		sasha.y = (container.getHeight() + 30) / 2;
-		octavian.x = (container.getWidth() + 30) / 2 + 100;
-		octavian.y = (container.getHeight() + 330) / 2 + 100;
-		inventary.putItem(new Gun(sasha));
-		inventary.putItem(new Blant(octavian));
-		camera = new Camera(sasha, new Rectangle(0, 0, 990, 810), container);
+		sasha.x = 400; 
+		sasha.y = -100;//фикс бага иерархии отрисовки виртуальным сашей
+
 		background = new Image("textures/darkmap.png");
-		car = new Entity(sasha.x - 100, sasha.y + 150) {};
+		car = new Entity(container.getWidth() + 30 / 2 - 100, (container.getHeight() + 30) / 2 + 150) {};
 		car.setGraphic(new Image("textures/car.png"));
 		car.setHitBox(0, 20, 100, 44);
 		car.addType(Entity.SOLID);
@@ -74,12 +81,7 @@ public class Flashback extends MyWorld {
 		tent.setGraphic(new Image("textures/tent.png"));
 		tent.setHitBox(15, 40, 90, 45);
 		tent.addType(Entity.SOLID);
-		run_port = new Trigger(260, 0, 400, 40) {
-			@Override
-			public void event() {
-				this.teleport(game, Launcher.RUN);
-			}
-		};
+
 		Image[] tempArray = { new Image("flashback_intro1.png"), new Image("flashback_intro2.png"),
 				new Image("flashback_intro3.png") };
 		firstSlideshow = tempArray;
@@ -90,9 +92,27 @@ public class Flashback extends MyWorld {
 		sound_lib[2] = new Sound("flashback3.ogg");
 		sound_lib[3] = new Sound("flashback4.ogg");
 		lol = new Image("textures/lol.png");
-		run_port.debug = false;
-		sasha.debug = false;
-		octavian.debug = false;
+		for(int i = 0; i<bush.length; i++) {
+			bush[i] = new Bush(90, 400+30*i, Bush.DARK);
+			add(bush[i]);
+		}
+		bush[3].x = 120;
+		bush[3].y = 430;		
+		bushevent = new Trigger(100, 420, 60, 80) {
+			@Override
+			public void event() {
+				try {
+					pause = true;
+					bushimage = new Image("textures/beast_bush1.png");
+					counter = 3000; 
+					game.enterState(Launcher.RUN);
+				} catch (SlickException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		bushevent.debug = true;
+		add(bushevent);
 		int map[][] = { { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 				{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 				{ 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 },
@@ -118,17 +138,14 @@ public class Flashback extends MyWorld {
 
 		for (int i = 0; i < 22; i++) {
 			for (int j = 0; j < 18; j++) {
-				if (map[i][j] == 1) add(new Tree(45 * i, 45 * j, Tree.DARK));
+				if (map[i][j] == 1) add(new Tree(45 * i, 45 * j, Tree.DARK));		
 			}
 		}
 		this.map = map;
+
+		add(fireplace);
 		add(car);
 		add(tent);
-		add(fireplace);
-		add(run_port);
-		add(sasha);
-		add(octavian);
-		primary_entity = octavian;
 	}
 
 	@Override
@@ -170,21 +187,28 @@ public class Flashback extends MyWorld {
 			}
 
 		}
+		if(pause) {
+			getEntities().remove(bushevent);
+			g.drawImage(bushimage, octavian.x-140, octavian.y-290);
+			counter++;
+			if(counter>3500) pause = false;
+		}
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-		super.update(container, game, delta);
-		counter++;
-		if (counter == 70)
-			sound_lib[0].play();
-		if (counter == 600)
-			sound_lib[1].play();
-		if (counter == 1400)
-			sound_lib[2].play();
-		if (counter == 2300)
-			sound_lib[3].play();
-		
+		if(!pause) {
+			super.update(container, game, delta);
+			counter++;
+			if (counter == 70)
+				sound_lib[0].play();
+			if (counter == 600)
+				sound_lib[1].play();
+			if (counter == 1400)
+				sound_lib[2].play();
+			if (counter == 2300)
+				sound_lib[3].play();
+		}
 	}
 
 

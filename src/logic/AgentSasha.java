@@ -26,11 +26,6 @@ public class AgentSasha extends Player{
 	}
 	
 	@Override
-	public void render(GameContainer container, Graphics g) throws SlickException {
-		super.render(container, g);
-	}
-	
-	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		if(check("RIGHT")&&collide(SOLID, x+2, y)==null&&collide(PLAYER, x+2, y)==null)x+=speed;
 		if(check("LEFT")&&collide(SOLID, x-2, y)==null&&collide(PLAYER, x-2, y)==null)x-=speed;

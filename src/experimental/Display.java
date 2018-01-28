@@ -12,7 +12,6 @@ import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.state.StateBasedGame;
 
-import core.FreeFormForestGenerator;
 import core.TrueTypeFont;
 import it.marteEngine.World;
 import logic.Tree;
