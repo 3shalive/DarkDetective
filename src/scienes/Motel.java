@@ -1,12 +1,11 @@
 package scienes;
 
 import core.MyWorld;
-import logic.AgentSasha;
 
 public class Motel extends MyWorld {
 
-	public Motel(int id, AgentSasha player) {
-		super(id, player);
+	public Motel(int id) {
+		super(id);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -13,6 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import core.Camera;
 import core.MyWorld;
 import it.marteEngine.entity.Entity;
+import logic.AgentOctavian;
 import logic.AgentSasha;
 import logic.Bush;
 import logic.Tree;
@@ -20,8 +21,8 @@ import logic.Trigger;
 
 public class Flashback extends MyWorld {
 	
-	public Flashback(int id, AgentSasha sasha) {
-		super(id, sasha);
+	public Flashback(int id) {
+		super(id);
 	}
 
 	Entity car;
@@ -44,6 +45,11 @@ public class Flashback extends MyWorld {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		super.enter(container, game);
+		octavian.x = 430;
+		octavian.y = 400;
+		octavian.debug = true;
+		add(octavian);
+		camera = new Camera(octavian, new Rectangle(0, 0, 990, 810), container);
 		leitmotive = new Music("data/Flashback.ogg");
 		//leitmotive.loop();
 		counter = 3000;
@@ -52,11 +58,9 @@ public class Flashback extends MyWorld {
 	@Override
 	public void init(final GameContainer container, final StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		sasha.x = 100;
+		sasha.x = 400; 
 		sasha.y = -100;//фикс бага иерархии отрисовки виртуальным сашей
-		octavian.x = 440;
-		octavian.y = 400;
-		camera = new Camera(octavian, new Rectangle(0, 0, 990, 810), container);
+
 		background = new Image("textures/darkmap.png");
 		car = new Entity(container.getWidth() + 30 / 2 - 100, (container.getHeight() + 30) / 2 + 150) {};
 		car.setGraphic(new Image("textures/car.png"));
@@ -70,6 +74,7 @@ public class Flashback extends MyWorld {
 		tent.setGraphic(new Image("textures/tent.png"));
 		tent.setHitBox(15, 40, 90, 45);
 		tent.addType(Entity.SOLID);
+
 		Image[] tempArray = { new Image("flashback_intro1.png"), new Image("flashback_intro2.png"),
 				new Image("flashback_intro3.png") };
 		firstSlideshow = tempArray;
@@ -92,7 +97,8 @@ public class Flashback extends MyWorld {
 				try {
 					pause = true;
 					bushimage = new Image("textures/beast_bush1.png");
-					counter = 3000;
+					counter = 3000; 
+					game.enterState(Launcher.RUN);
 				} catch (SlickException e) {
 					e.printStackTrace();
 				}
@@ -133,7 +139,6 @@ public class Flashback extends MyWorld {
 		add(fireplace);
 		add(car);
 		add(tent);
-		add(octavian);
 	}
 
 	@Override
