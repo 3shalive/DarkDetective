@@ -13,9 +13,8 @@ import org.newdawn.slick.state.StateBasedGame;
 import core.Camera;
 import core.MyWorld;
 import it.marteEngine.entity.Entity;
-import logic.AgentOctavian;
-import logic.AgentSasha;
 import logic.Bush;
+import logic.Save;
 import logic.Tree;
 import logic.Trigger;
 
@@ -39,14 +38,12 @@ public class Flashback extends MyWorld {
 	Bush[] bush = new Bush[4];
 	Sound[] sound_lib = new Sound[4];
 	boolean pause = false;
-
+	Save save;
 	
 //97 | 426
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		super.enter(container, game);
-		octavian.x = 430;
-		octavian.y = 400;
 		octavian.debug = true;
 		add(octavian);
 		camera = new Camera(octavian, new Rectangle(0, 0, 990, 810), container);
@@ -60,7 +57,7 @@ public class Flashback extends MyWorld {
 		super.init(container, game);
 		sasha.x = 400; 
 		sasha.y = -100;//фикс бага иерархии отрисовки виртуальным сашей
-
+		save=new Save(115,167,container.getInput());
 		background = new Image("textures/darkmap.png");
 		car = new Entity(container.getWidth() + 30 / 2 - 100, (container.getHeight() + 30) / 2 + 150) {};
 		car.setGraphic(new Image("textures/car.png"));
@@ -139,6 +136,7 @@ public class Flashback extends MyWorld {
 		add(fireplace);
 		add(car);
 		add(tent);
+		add(save);
 	}
 
 	@Override
