@@ -1,5 +1,7 @@
 package core;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -31,6 +33,7 @@ public class Player extends Entity{
 		addType(PLAYER);
 	}
 	
+
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		if(debug) {
