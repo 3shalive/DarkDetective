@@ -15,6 +15,7 @@ import core.MyWorld;
 import it.marteEngine.entity.Entity;
 import logic.Bush;
 import logic.Pointer;
+import logic.Save;
 import logic.Tree;
 import logic.Trigger;
 
@@ -39,7 +40,7 @@ public class Flashback extends MyWorld {
 	Sound[] sound_lib = new Sound[4];
 	Pointer pointer;
 	boolean pause = false;
-
+	Save save;
 	
 //97 | 426
 	@Override
@@ -60,6 +61,7 @@ public class Flashback extends MyWorld {
 	@Override
 	public void init(final GameContainer container, final StateBasedGame game) throws SlickException {
 		super.init(container, game);
+		save=new Save(115,167,container.getInput());
 		background = new Image("textures/darkmap.png");
 		car = new Entity(container.getWidth() + 30 / 2 - 100, (container.getHeight() + 30) / 2 + 150) {};
 		car.setGraphic(new Image("textures/car.png"));
@@ -136,6 +138,7 @@ public class Flashback extends MyWorld {
 		add(fireplace);
 		add(car);
 		add(tent);
+		add(save);
 	}
 
 	@Override
