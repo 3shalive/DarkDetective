@@ -14,6 +14,7 @@ import core.Camera;
 import core.MyWorld;
 import it.marteEngine.entity.Entity;
 import logic.Bush;
+import logic.Pointer;
 import logic.Save;
 import logic.Tree;
 import logic.Trigger;
@@ -37,13 +38,20 @@ public class Flashback extends MyWorld {
 	Trigger bushevent;
 	Bush[] bush = new Bush[4];
 	Sound[] sound_lib = new Sound[4];
+	Pointer pointer;
 	boolean pause = false;
+	boolean[] active = new boolean[3];
 	Save save;
+	Flashback one = this;
 	
 //97 | 426
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		super.enter(container, game);
+		sasha.x = 400; 
+		sasha.y = -100;//фикс бага иерархии отрисовки виртуальным сашей
+		octavian.x = 430;
+		octavian.y = 400;
 		octavian.debug = true;
 		camera = new Camera(octavian, new Rectangle(0, 0, 990, 810), container);
 		leitmotive = new Music("data/Flashback.ogg");
@@ -56,9 +64,7 @@ public class Flashback extends MyWorld {
 	@Override
 	public void init(final GameContainer container, final StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		sasha.x = 400; 
-		sasha.y = -100;//фикс бага иерархии отрисовки виртуальным сашей
-		save=new Save(115,167,game);
+		save=new Save(115,167,game); 
 		background = new Image("textures/darkmap.png");
 		car = new Entity(container.getWidth() + 30 / 2 - 100, (container.getHeight() + 30) / 2 + 150) {};
 		car.setGraphic(new Image("textures/car.png"));
@@ -72,7 +78,6 @@ public class Flashback extends MyWorld {
 		tent.setGraphic(new Image("textures/tent.png"));
 		tent.setHitBox(15, 40, 90, 45);
 		tent.addType(Entity.SOLID);
-
 		Image[] tempArray = { new Image("flashback_intro1.png"), new Image("flashback_intro2.png"),
 				new Image("flashback_intro3.png") };
 		firstSlideshow = tempArray;
@@ -96,14 +101,14 @@ public class Flashback extends MyWorld {
 					pause = true;
 					bushimage = new Image("textures/beast_bush1.png");
 					counter = 3000; 
-					game.enterState(Launcher.RUN);
+					one.active[0] = false;
 				} catch (SlickException e) {
 					e.printStackTrace();
 				}
 			}
 		};
 		bushevent.debug = true;
-		add(bushevent);
+		pointer = new Pointer(bushevent.x+bushevent.width/2+40, bushevent.y+bushevent.width/2+40, bushevent.width/2);
 		int map[][] = { { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 						{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 						{ 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 },
@@ -132,8 +137,10 @@ public class Flashback extends MyWorld {
 				if (map[i][j] == 1) add(new Tree(45 * i, 45 * j, Tree.DARK));		
 			}
 		}
+		active[0] = true;
 		this.map = map;
 		save.id=Launcher.FLASHBACK;
+		add(bushevent);
 		add(fireplace);
 		add(car);
 		add(tent);
@@ -151,8 +158,8 @@ public class Flashback extends MyWorld {
 			for (Entity en : this.getEntities()) {
 				en.render(container, g);
 			}
-			if (showInvent)
-				inventary.render(container, g);
+			if (showInvent)inventary.render(container, g);
+			if(active[0])pointer.render(g);
 		} else {
 			if (counter < 600) {
 				g.drawImage(firstSlideshow[0], 0, 0);
@@ -193,14 +200,11 @@ public class Flashback extends MyWorld {
 		if(!pause) {
 			super.update(container, game, delta);
 			counter+=1;//TODO: присобачить сюда дельту и поменять тайминги
-			if (counter == 70)
-				sound_lib[0].play();
-			if (counter == 600)
-				sound_lib[1].play();
-			if (counter == 1400)
-				sound_lib[2].play();
-			if (counter == 2300)
-				sound_lib[3].play();
+			if (counter == 70)sound_lib[0].play();
+			if (counter == 600)sound_lib[1].play();
+			if (counter == 1400)sound_lib[2].play();
+			if (counter == 2300)sound_lib[3].play();
+			if(active[0])pointer.update(delta, counter);
 		}
 	}
 
