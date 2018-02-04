@@ -36,7 +36,7 @@ public class Launcher extends StateBasedGame {
 		this.addState(new Motel(4));
 		this.addState(new Death(DEATH_SCREEN));
 		this.addState(new MainMenu(MENU_SCREEN));
-		enterState(MENU_SCREEN);
+		enterState(FLASHBACK);
 	}
 
 	public static void main(String[] args) throws SlickException {

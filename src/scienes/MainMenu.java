@@ -133,7 +133,8 @@ public class MainMenu extends World {
 					for(String lol:list) {
 						System.out.println(""+lol);
 					}
-					game.enterState(Launcher.FLASHBACK);
+					System.out.println(" state id"+list.get(4));
+					game.enterState(Integer.parseInt(list.get(4)));
 					System.out.println("Octavian "+MyWorld.octavian.x+" | "+ MyWorld.octavian.y);
 					System.out.println("Sasha "+MyWorld.sasha.x+" | "+ MyWorld.sasha.y);
 				} catch (IOException e) {
