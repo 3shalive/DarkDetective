@@ -9,4 +9,10 @@ public class Motel extends MyWorld {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

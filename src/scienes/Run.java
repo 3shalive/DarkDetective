@@ -98,6 +98,12 @@ public class Run extends MyWorld {
 		}
 		if(octavian.y<800) showMessage = false;
 	}
+
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
 
