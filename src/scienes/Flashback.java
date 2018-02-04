@@ -40,7 +40,9 @@ public class Flashback extends MyWorld {
 	Sound[] sound_lib = new Sound[4];
 	Pointer pointer;
 	boolean pause = false;
+	boolean[] active = new boolean[3];
 	Save save;
+	Flashback one = this;
 	
 //97 | 426
 	@Override
@@ -98,6 +100,7 @@ public class Flashback extends MyWorld {
 					pause = true;
 					bushimage = new Image("textures/beast_bush1.png");
 					counter = 3000; 
+					one.active[0] = false;
 				} catch (SlickException e) {
 					e.printStackTrace();
 				}
@@ -133,6 +136,7 @@ public class Flashback extends MyWorld {
 				if (map[i][j] == 1) add(new Tree(45 * i, 45 * j, Tree.DARK));		
 			}
 		}
+		active[0] = true;
 		this.map = map;
 		add(bushevent);
 		add(fireplace);
@@ -152,7 +156,7 @@ public class Flashback extends MyWorld {
 				en.render(container, g);
 			}
 			if (showInvent)inventary.render(container, g);
-			pointer.render(g);
+			if(active[0])pointer.render(g);
 		} else {
 			if (counter < 600) {
 				g.drawImage(firstSlideshow[0], 0, 0);
@@ -193,16 +197,11 @@ public class Flashback extends MyWorld {
 		if(!pause) {
 			super.update(container, game, delta);
 			counter+=1;//TODO: присобачить сюда дельту и поменять тайминги
-			if (counter == 70)
-				sound_lib[0].play();
-			if (counter == 600)
-				sound_lib[1].play();
-			if (counter == 1400)
-				sound_lib[2].play();
-			if (counter == 2300)
-				sound_lib[3].play();
-			//bushevent.x+bushevent.width/2, bushevent.y+bushevent.width/2, bushevent.width/2
-			pointer.update(delta, counter);
+			if (counter == 70)sound_lib[0].play();
+			if (counter == 600)sound_lib[1].play();
+			if (counter == 1400)sound_lib[2].play();
+			if (counter == 2300)sound_lib[3].play();
+			if(active[0])pointer.update(delta, counter);
 		}
 	}
 
