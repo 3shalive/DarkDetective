@@ -23,7 +23,7 @@ public class Player extends Entity{
 	public Item wearpon;
 	public Monster target = null;
 	public int hp = 100;
-
+	public int id = 0;
 	
 	public Player(float x, float y) throws SlickException {
 		super(x, y);
@@ -39,5 +39,6 @@ public class Player extends Entity{
 		}
 		g.drawImage(player, x, y);
 	}
+	
 	
 	}

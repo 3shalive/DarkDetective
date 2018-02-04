@@ -17,7 +17,7 @@ import logic.AgentSasha;
 import logic.Inventary;
 import scienes.Launcher;
 
-public class MyWorld extends World {
+abstract public class MyWorld extends World {
 
 	/*TODO: повыпиливать лишнее из проекта
 	 * и написать документацию к сложным участкам кода
@@ -77,6 +77,11 @@ public class MyWorld extends World {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		super.update(container, game, delta);
+		if(octavian.id!= game.getCurrentStateID()||sasha.id!= game.getCurrentStateID()) 
+		{
+			octavian.id=game.getCurrentStateID();
+			sasha.id=game.getCurrentStateID();
+		}
 		sec=(int)(tempTime+=delta)*6/100;
 		if(sec>=60) {
 			minutes++;
@@ -123,4 +128,5 @@ public class MyWorld extends World {
 			}
 		}
 	}
+	public abstract void reset();
 }

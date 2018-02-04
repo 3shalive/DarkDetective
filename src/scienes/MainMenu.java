@@ -1,10 +1,12 @@
 package scienes;
 
+import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -13,6 +15,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import core.MyWorld;
+import core.TrueTypeFont;
 import it.marteEngine.World;
 
 public class MainMenu extends World {
@@ -21,6 +24,9 @@ public class MainMenu extends World {
 	Image Play;
 	Image Background;
 	Image Developers;
+	Font font = new Font("Courier New", Font.PLAIN, 16);
+	TrueTypeFont slicFont = new TrueTypeFont(font, true,
+			("éöóêåíãøùçõúôûâàïðîëäæýÿ÷ñìèòüáþ¸".toUpperCase() + "éöóêåíãøùçõúôûâàïðîëäæýÿ÷ñìèòüáþ¸").toCharArray());
 	int x = 680;
 	int X = 680;
 	int x1 = 680;
@@ -97,7 +103,9 @@ public class MainMenu extends World {
 		g.drawImage(Load, x1, 126);
 		g.drawImage(Developers, x2, 252);
 		g.drawImage(Exit, x3, 378);
-
+		g.setFont(slicFont);
+		g.setColor(Color.white);
+		g.drawString("Íàæìèòå Esc, ÷òî áû âåðíóòüñÿ â èãðó", 10, 10);
 	}
 
 	@Override
@@ -106,13 +114,21 @@ public class MainMenu extends World {
 		m_x = newx;
 		m_y = newy;
 	}
-
+	
+	@Override
+	public void keyPressed(int key, char c) {
+		super.keyPressed(key, c);
+		if (key == Input.KEY_ESCAPE) {
+			game.enterState(MyWorld.octavian.id);
+		}
+	}
 	@Override
 	public void mousePressed(int button, int m_x, int m_y) {
 		super.mousePressed(button, m_x, m_y);
 		if (button == Input.MOUSE_LEFT_BUTTON) {
 			if (m_x >= 612 && m_y < 126) {
-
+				for(MyWorld world:((Launcher)game).list)world.reset();
+				game.enterState(Launcher.PROLOGUE);	
 			}
 			if (m_x >= 612 && m_y < 252 && m_y > 126) {
 				try {		

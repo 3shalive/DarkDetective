@@ -211,4 +211,10 @@ public class Flashback extends MyWorld {
 		leitmotive.stop();
 	}
 
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

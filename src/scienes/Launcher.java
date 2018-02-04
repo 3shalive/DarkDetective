@@ -1,5 +1,7 @@
 package scienes;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -16,7 +18,7 @@ public class Launcher extends StateBasedGame {
 	public static final int RUN = 2;
 	public static final int MENU_SCREEN = 10;
 	public static final int DEATH_SCREEN = 9;
-	
+	ArrayList<MyWorld> list=new ArrayList<MyWorld>();
 	
 	public Launcher(String name) {
 		super(name);
@@ -30,13 +32,14 @@ public class Launcher extends StateBasedGame {
 		 * Инициализация сцены подразумевает запуск её init-а
 		 * Не задавайте параметры игроков в этом методе - изменения отразятся на всех сценах!
 		 */
+		list.add(new Flashback(FLASHBACK));
+		list.add(new Run(RUN));
 		this.addState(new Prologue(PROLOGUE));
-		this.addState(new Flashback(FLASHBACK));
-		this.addState(new Run(RUN));
-		this.addState(new Motel(4));
+		this.addState(list.get(0));
+		this.addState(list.get(1));
 		this.addState(new Death(DEATH_SCREEN));
 		this.addState(new MainMenu(MENU_SCREEN));
-		enterState(FLASHBACK);
+		enterState(MENU_SCREEN);
 	}
 
 	public static void main(String[] args) throws SlickException {
