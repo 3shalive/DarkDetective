@@ -19,10 +19,6 @@ public class Pointer extends Circle {
 		super(centerPointX, centerPointY, radius);
 	}
 
-	public Pointer(float centerPointX, float centerPointY, float radius, int segmentCount) {
-		super(centerPointX, centerPointY, radius, segmentCount);
-	}
-
 	public void render(Graphics g) {
 		g.setAntiAlias(true);
 		g.setColor(Color.green);
@@ -40,9 +36,9 @@ public class Pointer extends Circle {
 				 setCenterX( getCenterX()-1);
 				 setCenterY( getCenterY()-1);
 			}
-		 setRadius(anim);
+		setRadius(anim);
 		if(anim == 0)isFull=false;
-		if(anim == 20)isFull=true;
+		if(anim == 15)isFull=true;
 	}
 	
 }

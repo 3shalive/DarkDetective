@@ -34,12 +34,12 @@ public class Launcher extends StateBasedGame {
 		 */
 		list.add(new Flashback(FLASHBACK));
 		list.add(new Run(RUN));
-		this.addState(new Prologue(PROLOGUE));
+		this.addState(new Intro(PROLOGUE));
 		this.addState(list.get(0));
 		this.addState(list.get(1));
 		this.addState(new Death(DEATH_SCREEN));
 		this.addState(new MainMenu(MENU_SCREEN));
-		enterState(MENU_SCREEN);
+		enterState(FLASHBACK);
 	}
 
 	public static void main(String[] args) throws SlickException {
