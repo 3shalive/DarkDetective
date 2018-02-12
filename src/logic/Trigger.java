@@ -15,8 +15,6 @@ public abstract class Trigger extends Entity {
 	public boolean debug = false;
 	private Pointer pointer = null;
 	private int counter = 0;
-	/**Оно работает, но както через задницу, отладим - можно будет пользоваться*/
-	@Deprecated
 	public boolean markAsActive = false;
 	
 	/**При активации совершает действие, описаное в event
@@ -30,7 +28,8 @@ public abstract class Trigger extends Entity {
 		setHitBox(0,0,width,height);
 		hitBox = new Rectangle(x, y, width, height);
 		addType(Entity.SOLID);
-		 pointer = height<width ? new Pointer(x+width/2, y+height/2, width/2) : new Pointer(x+width/2, y+height/2, width/2);
+		addType("TRIGGER");
+		pointer = new Pointer(x+width, y+height, 30);
 	}
 	
 	public abstract void event();
@@ -58,5 +57,4 @@ public abstract class Trigger extends Entity {
 		if(markAsActive) pointer.update(delta, counter);
 		counter += delta / 17;
 	}
-//	TODO: починить вшитые в ивенты маркеры заданий, или удалить их
 }

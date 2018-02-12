@@ -14,7 +14,6 @@ import core.Camera;
 import core.MyWorld;
 import it.marteEngine.entity.Entity;
 import logic.Bush;
-import logic.Pointer;
 import logic.Save;
 import logic.Tree;
 import logic.Trigger;
@@ -29,32 +28,32 @@ public class Flashback extends MyWorld {
 	int map[][];
 	Music leitmotive;
 	Image firstSlideshow[];
-	Image line, big_line, lol;
+	Image line, big_line, lightEffect;
 	Image bushimage;
-	Trigger bushevent, bushevent1;
+	Trigger bushevent, bushevent1, bushevent2, finish;
 	Bush[] bush = new Bush[4];
 	Bush[] bush1 = new Bush[4];
+	Bush[] bush2 = new Bush[4];
 	Sound[] sound_lib = new Sound[4];
-	Pointer checkpoint1, checkpoint2, checkpoint3;
 	boolean pause = false;
-	boolean[] active = new boolean[3];
-	boolean questFinised = false;
+	boolean isFirstQuestDone, isSecondQuestDone, isThirdQuestDone = false;
 	Save save;
 	Flashback one = this;
 	int delta = 0;
+	boolean finitaLaComedia = false;
 	
-//97 | 426
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		super.enter(container, game);
+		reset();
 		sasha.x = 400; sasha.y = -100;//фикс бага иерархии отрисовки виртуальным сашей
 		octavian.debug = true;
 		camera = new Camera(octavian, new Rectangle(0, 0, 990, 810), container);
+		octavian.x = 450;
+		octavian.y = 400;		
 		leitmotive = new Music("data/Flashback.ogg");
-		//leitmotive.loop();
+		//leitmotive.loop(); 
 		counter = 3000;
-		MyWorld.sasha.speed=1;
-		MyWorld.octavian.speed=1;
 	}
 
 	@Override
@@ -67,7 +66,7 @@ public class Flashback extends MyWorld {
 		car.setHitBox(0, 20, 100, 44);
 		car.addType(Entity.SOLID);
 		fireplace = new Entity(550, 350) {};
-		fireplace.setGraphic(new Image("textures/fireplace.png"));//207|52
+		fireplace.setGraphic(new Image("textures/fireplace.png"));
 		fireplace.setHitBox(10, 30, 30, 30);
 		fireplace.addType(Entity.SOLID);
 		tent = new Entity(600, 250) {};
@@ -75,13 +74,16 @@ public class Flashback extends MyWorld {
 		tent.setHitBox(15, 40, 90, 45);
 		tent.addType(Entity.SOLID);
 		for(int i = 0; i<4; i++)bush1[i]=new Bush(0, 0, Bush.DARK);
+		for(int i = 0; i<4; i++)bush2[i]=new Bush(0, 0, Bush.DARK);
 		Image[] tempArray = { 
 				new Image("flashback_intro1.png"), 
-				new Image("flashback_intro2.png"), //186 50
-				new Image("flashback_intro3.png")};
+				new Image("flashback_intro2.png"), //866 616
+				new Image("flashback_intro3.png")};//836 646
 		firstSlideshow = tempArray;
+		bushimage = new Image("textures/flashback_intro1.png");
 		line = new Image("textures/line.png");
 		big_line = new Image("textures/big_line.png");
+		lightEffect = new Image("textures/lol.png");
 		sound_lib[0] = new Sound("flashback1.ogg");
 		sound_lib[1] = new Sound("flashback2.ogg");
 		sound_lib[2] = new Sound("flashback3.ogg");
@@ -90,51 +92,51 @@ public class Flashback extends MyWorld {
 		bush1[1].x = 220; bush1[1].y = 50;
 		bush1[2].x = 186; bush1[2].y = 80;		
 		bush1[3].x = 186; bush1[3].y = 110;		
-		lol = new Image("textures/lol.png");
+		bush2[0].x = 866; bush2[0].y = 616;
+		bush2[1].x = 866; bush2[1].y = 648;
+		bush2[2].x = 820; bush2[2].y = 667;		
+		bush2[3].x = 820; bush2[3].y = 697;	
+		for(Bush bush: bush2) this.add(bush);
 		for(int i = 0; i<bush.length; i++) {
 			bush[i] = new Bush(90, 400+30*i, Bush.DARK);
 			add(bush[i]);
 		}
 		bush[3].x = 120; bush[3].y = 430;		
+		finish = new Trigger(tent.x, tent.y, tent.width, tent.height) {
+			@Override
+			public void event() {
+				if(isFirstQuestDone&&isSecondQuestDone&&isThirdQuestDone) {
+					finitaLaComedia = true;
+					counter = 3000;
+				}
+			}
+		};
+		
 		bushevent = new Trigger(100, 420, 60, 80) {
 			@Override
 			public void event() {
-				try {
-					pause = true;
-					bushimage = new Image("textures/beast_bush1.png");
-					counter = 3000; 
-					one.active[0] = false;
-					one.active[1] = true;
-					checkpoint1.setCenterX(237);
-					checkpoint1.setCenterY(122);	
-				}  catch (SlickException e) {
-					System.out.println("Произошла ошибка при выполнении первого задания!");
-					System.out.println("А если конкретно, то "+e.getMessage());
-				}
+				if(!pause)counter = 3000;
+				pause = true;
 			}
 		};
 		
 		bushevent1 = new Trigger(186, 50, 60, 100) {
 			@Override
 			public void event() {
-				try {
-					pause = true;
-					bushimage = new Image("textures/beast_bush1.png");
-					counter = 3000; 
-					one.active[1] = false;
-					one.active[2] = true;
-					checkpoint2.setCenterX(220);
-					checkpoint2.setCenterY(80);
-				} catch (SlickException e) {
-					System.out.println("Произошла ошибка при выполнении второго задания!");
-					System.out.println("А если конкретно, то "+e.getMessage());
-				}
+				if(!pause)counter = 3000;
+				pause = true;
 			}
 		};		
-		bushevent.debug = true;
-		bushevent1.debug = true;
-		checkpoint1 = new Pointer(bushevent.x+bushevent.width/2+40, bushevent.y+bushevent.width/2+40, bushevent.width/2);
-		checkpoint2 = new Pointer(bushevent1.x+bushevent1.width/2+40, bushevent1.y+bushevent1.width/2+40, bushevent1.width/2);
+		bushevent2 = new Trigger(836, 616, 80, 100) {
+			@Override
+			public void event() {
+				if(!pause)counter = 3000;
+				pause = true;
+			}
+		};		
+		bushevent.markAsActive = true;
+		bushevent1.markAsActive = true;
+		bushevent2.markAsActive = true;
 		int map[][] = { { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 						{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 						{ 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 },
@@ -163,63 +165,119 @@ public class Flashback extends MyWorld {
 				if (map[i][j] == 1) add(new Tree(45 * i, 45 * j, Tree.DARK));		
 			}
 		}
-		active[0] = true;
 		this.map = map;
 		save.id=Launcher.FLASHBACK;
 		for(Bush bush: bush1) this.add(bush);
-		add(bushevent);
-		add(bushevent1);
 		add(fireplace);
 		add(car);
 		add(tent);
 		add(save);
 		add(octavian);
-	}
-
+		for(Image img:firstSlideshow)img.setAlpha(0);
+		add(bushevent);
+		add(bushevent1);
+		add(bushevent2);
+		bushimage.setAlpha(0);
+		}
+	
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		g.setFont(slicFont);
 		g.setColor(Color.black);
-		if (counter > 2700) {
+		if (counter > 2100) {
 			super.render(container, game, g);
-			g.drawImage(lol, 520, 315);
+			g.drawImage(lightEffect, 520, 315);
 			for (Entity en : this.getEntities()) en.render(container, g);
 			if (showInvent)inventary.render(container, g);
-			if(active[0]||active[1])checkpoint1.render(g);
 		} else {
-			if (counter < 600) {
+			if (counter < 500) {
+				if(counter<70) firstSlideshow[0].setAlpha(firstSlideshow[0].getAlpha()+0.02f);
 				g.drawImage(firstSlideshow[0], 0, 0);
 				g.drawImage(line, 0, 0);
 				g.drawString("В тот день маленький Саша с родителями выехал на природу", 50, 10);
+				if(counter>400) firstSlideshow[0].setAlpha(firstSlideshow[0].getAlpha()-0.01f);
 			}
-			if (counter < 1400 && counter > 600) {
+			if (counter < 1000 && counter > 500) {
+				if(counter<550) firstSlideshow[1].setAlpha(firstSlideshow[1].getAlpha()+0.02f);
 				g.drawImage(firstSlideshow[1], 0, 0);
 				g.drawImage(line, 0, 0);
 				g.drawString("Погода стояла отличная, солнечный день пролетел быстро.\n"
 						+ "На поляну, где стоял их маленький лагерь спустились сумерки", 50, 0);
+				if(counter>900) firstSlideshow[1].setAlpha(firstSlideshow[1].getAlpha()-0.01f);
 			}
-			if (counter > 1400 && counter < 2800) {
+			if (counter > 1000 && counter < 2100) {
+				if(counter<1050) firstSlideshow[2].setAlpha(firstSlideshow[2].getAlpha()+0.02f);
 				g.drawImage(firstSlideshow[2], 0, 0);
-				if (counter > 1400 && counter < 2300) {
+				if (counter > 1000 && counter < 1600) {
 					g.drawImage(big_line, 0, 0);
 					g.drawString("Ближе к полуночи он проснулся с явным ощущением тревоги..\n"
 							+ " Либо приснился плохой сон, либо действительно чьё-то незримое \n"
 							+ "присутствие разбудило его", 50, 20);
 				}
-				if (counter > 2300 && counter < 2800) {
+				if (counter > 1600 && counter < 2000) {
 					g.drawImage(line, 0, 0);
 					g.drawString("Так или иначе, он решил тогда осмотреть лес возле лагеря...", 50, 10);
+					if(counter>1900) firstSlideshow[2].setAlpha(firstSlideshow[2].getAlpha()-0.01f);
 				}
 			}
 
 		}
 		if(pause) {
-			g.drawImage(bushimage, octavian.x-140, octavian.y-290);			
-			counter+= delta / 17;
-			if(counter>3200) {
-				if(octavian.collideWith(bushevent, octavian.x-5, octavian.y) != null) getEntities().remove(bushevent);
-				if(octavian.collideWith(bushevent1, octavian.x-5, octavian.y) != null) getEntities().remove(bushevent1);
-				pause = false;
+			if(bushimage.getAlpha()>1)bushimage.setAlpha(0);
+			if(counter<3050) bushimage.setAlpha(bushimage.getAlpha()+0.02f);
+			if(counter>3050&&counter<3100) bushimage.setAlpha(1);
+			if(octavian.collideWith(bushevent, octavian.x-2, octavian.y-2) != null)g.drawImage(bushimage, octavian.x-140, octavian.y-290);	
+			else if(octavian.collideWith(bushevent1, octavian.x-2, octavian.y-2) != null) g.drawImage(bushimage, 20, 20);
+			else if(octavian.collideWith(bushevent2, octavian.x+2, octavian.y+2) != null) g.drawImage(bushimage, octavian.x-600,  octavian.y-380);
+			Entity en = octavian.collide("TRIGGER", octavian.x-2, octavian.y-2);
+			if(en==null) en = octavian.collide("TRIGGER", octavian.x+octavian.width+2, octavian.y+octavian.height-2);
+			if(en==null) en = octavian.collide("TRIGGER", octavian.x+octavian.width+2, octavian.y+2);
+			if(en==null) en = octavian.collide("TRIGGER", octavian.x-2, octavian.y+octavian.height-2);
+			if(!isFirstQuestDone) isFirstQuestDone = true;
+			else if(!isSecondQuestDone&&getEntities().indexOf(en)!=-1) {
+				isSecondQuestDone = true;
+				bushimage = new Image("textures/flashback_intro2.png");
+			}
+			else if(!isThirdQuestDone&&getEntities().indexOf(en)!=-1) {
+				isThirdQuestDone = true;
+				bushimage = new Image("textures/flashback_intro3.png");
+			}
+			getEntities().remove(en);
+			counter += delta/17;
+			if(counter>3300) bushimage.setAlpha(bushimage.getAlpha()-0.01f);
+			if(counter>3400) pause = false;
+		}
+		if(finitaLaComedia) {
+			//TODO: заменить тестовое финальное слайдшоу на реальное
+			if (counter < 500) {
+				if(counter<70) firstSlideshow[0].setAlpha(firstSlideshow[0].getAlpha()+0.02f);
+				g.drawImage(firstSlideshow[0], 0, 0);
+				g.drawImage(line, 0, 0);
+				g.drawString("В тот день маленький Саша с родителями выехал на природу", 50, 10);
+				if(counter>400) firstSlideshow[0].setAlpha(firstSlideshow[0].getAlpha()-0.01f);
+			}
+			if (counter < 1000 && counter > 500) {
+				if(counter<550) firstSlideshow[1].setAlpha(firstSlideshow[1].getAlpha()+0.02f);
+				g.drawImage(firstSlideshow[1], 0, 0);
+				g.drawImage(line, 0, 0);
+				g.drawString("Погода стояла отличная, солнечный день пролетел быстро.\n"
+						+ "На поляну, где стоял их маленький лагерь спустились сумерки", 50, 0);
+				if(counter>900) firstSlideshow[1].setAlpha(firstSlideshow[1].getAlpha()-0.01f);
+			}
+			if (counter > 1000 && counter < 2100) {
+				if(counter<1050) firstSlideshow[2].setAlpha(firstSlideshow[2].getAlpha()+0.02f);
+				g.drawImage(firstSlideshow[2], 0, 0);
+				if (counter > 1000 && counter < 1600) {
+					g.drawImage(big_line, 0, 0);
+					g.drawString("Ближе к полуночи он проснулся с явным ощущением тревоги..\n"
+							+ " Либо приснился плохой сон, либо действительно чьё-то незримое \n"
+							+ "присутствие разбудило его", 50, 20);
+				}
+				if (counter > 1600 && counter < 2000) {
+					g.drawImage(line, 0, 0);
+					g.drawString("Так или иначе, он решил тогда осмотреть лес возле лагеря...", 50, 10);
+					if(counter>1900) firstSlideshow[2].setAlpha(firstSlideshow[2].getAlpha()-0.01f);
+				}
 			}
 		}
 	}
@@ -228,13 +286,11 @@ public class Flashback extends MyWorld {
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 		if(!pause) {
 			super.update(container, game, delta);
-			counter+= delta / 17;
+			counter += delta/17;
 			if (counter == 70)sound_lib[0].play();
-			if (counter == 600)sound_lib[1].play();
-			if (counter == 1400)sound_lib[2].play();
-			if (counter == 2300)sound_lib[3].play();
-			if (questFinised) game.enterState(Launcher.RUN);
-			if(active[0]||active[1]) checkpoint1.update(delta/2, counter);
+			if (counter == 550)sound_lib[1].play();
+			if (counter == 1050)sound_lib[2].play();
+			if (counter == 1650)sound_lib[3].play();
 			this.delta = delta;
 		}
 	}
@@ -249,11 +305,10 @@ public class Flashback extends MyWorld {
 	@Override
 	public void reset() {
 		counter = 0;
-		leitmotive.setPosition(0);
-		for (int i = 0; i < active.length; i++) active[i] = false;		
-		active[0] = true;
+		isFirstQuestDone = false;
+		isSecondQuestDone = false;
+		isThirdQuestDone = false;
 		pause = false;
-		
 	}
 
 }

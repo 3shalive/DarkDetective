@@ -23,6 +23,8 @@ public class Pointer extends Circle {
 		g.setAntiAlias(true);
 		g.setColor(Color.green);
 		g.draw(this);		
+		g.setColor(Color.black);
+		g.setAntiAlias(false);		
 	}
 	
 	public void update(int delta, int counter) {
@@ -36,7 +38,8 @@ public class Pointer extends Circle {
 				 setCenterX( getCenterX()-1);
 				 setCenterY( getCenterY()-1);
 			}
-		setRadius(anim);
+		float temp = anim*0.2f;
+		setRadius((temp*temp));
 		if(anim == 0)isFull=false;
 		if(anim == 15)isFull=true;
 	}

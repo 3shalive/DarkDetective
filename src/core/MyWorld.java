@@ -102,29 +102,31 @@ abstract public class MyWorld extends World {
 		List<Entity> list = getEntities();
 		for (int i = 0; i < list.size() - 1; i++) {
 			Entity en = list.get(i);
-			try {
-				if (en.y > sasha.y) {
-					if (i < list.indexOf(sasha)) {
-						list.remove(list.indexOf(sasha));
-						list.add(list.indexOf(en), sasha);
+			if (!en.isType("TRIGGER")) {
+				try {
+					if (en.y > sasha.y) {
+						if (i < list.indexOf(sasha)) {
+							list.remove(list.indexOf(sasha));
+							list.add(list.indexOf(en), sasha);
+						}
+					} else if (list.indexOf(sasha) < i) {
+						list.remove(i);
+						list.add(list.indexOf(sasha), en);
 					}
-				} else if (list.indexOf(sasha) < i) {
-					list.remove(i);
-					list.add(list.indexOf(sasha), en);
-				}
-				// ===
-				if (en.y > octavian.y) {
-					if (list.indexOf(en) < list.indexOf(octavian)) {
-						list.remove(list.indexOf(octavian));
-						list.add(list.indexOf(en), octavian);
+					// ===
+					if (en.y > octavian.y) {
+						if (list.indexOf(en) < list.indexOf(octavian)) {
+							list.remove(list.indexOf(octavian));
+							list.add(list.indexOf(en), octavian);
+						}
+					} else if (list.indexOf(octavian) < list.indexOf(en)) {
+						list.remove(i);
+						list.add(list.indexOf(octavian), en);
 					}
-				} else if (list.indexOf(octavian) < list.indexOf(en)) {
-					list.remove(i);
-					list.add(list.indexOf(octavian), en);
+				} catch (IndexOutOfBoundsException e) {
+					System.out.println(e.getMessage());
+					System.out.println("чота с индексами, но как-то похуй вообще");
 				}
-			} catch (IndexOutOfBoundsException e) {
-				System.out.println(e.getMessage());
-				System.out.println("чота с индексами, но как-то похуй вообще");
 			}
 		}
 	}
