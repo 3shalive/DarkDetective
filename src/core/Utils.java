@@ -3,7 +3,7 @@ package core;
 import java.awt.Font;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.TrueTypeFont;
+import core.TrueTypeFont;
 
 public class Utils {
     //костыль, который загружает массив русских символов в поддерживаемые кодировки
@@ -14,20 +14,19 @@ public class Utils {
 	private Utils() {}
 	
 	/**
-	 * Позволяет установить русскую кодировку
+	 * Позволяет установить русскую кодировку, и добавить переносы строк
 	 * @param g набор графических инструментов
 	 **/
 	public static void setCharset_Russian(Graphics g) {
 		if(!g.getFont().equals(slicFont)) {
 			g.setFont(slicFont);
-			System.out.println("Установлена русская кодировка");
-			//TODO: Проверки на шрифты валятся, придумать, как не вызывать его каждый тик
+			//TODO: Придумать, как не вызывать смену шрифта каждый тик
 			//TODO: Найти отладчик с проверкой объектов в хипе, на случай утечек памяти
 		}
 	}
 	
 	/**
-	 * Позволяет установить русскую кодировку
+	 * Позволяет установить русскую кодировку, и добавить переносы строк
 	 * @param g набор графических инструментов
 	 * @param new_font шрифт awt, который задаёт параметры набора графических инструментов 
 	 **/

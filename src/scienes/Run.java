@@ -101,8 +101,6 @@ public class Run extends MyWorld {
 
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }

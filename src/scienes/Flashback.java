@@ -248,7 +248,6 @@ public class Flashback extends MyWorld {
 			if(counter>3400) pause = false;
 		}
 		if(finitaLaComedia) {
-			//TODO: заменить тестовое финальное слайдшоу на реальное
 			if (counter < 500) {
 				if(counter<70) firstSlideshow[0].setAlpha(firstSlideshow[0].getAlpha()+0.02f);
 				g.drawImage(firstSlideshow[0], 0, 0);
