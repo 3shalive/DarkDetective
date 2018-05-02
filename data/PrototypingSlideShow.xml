@@ -1,0 +1,24 @@
+<?xml version = "1.0"?>
+<slideshow>
+   <!--слайд, и его время существования на экране-->
+   <slide lifetime = "3000">
+      <!--изображение слайда-->
+      <picture>flashback_intro1.png</picture>
+      <!--субтитры и начало их отрисовки-->
+      <text delay = "1500">Так точно</text>
+      <!--любые звуки или озвучка и начало её воспроизведения-->
+      <voice delay = "1500">flashback1.ogg</voice>
+      <!--можно повторять сколько душе угодно - дочерние теги читаются в цикле-->
+      <!--text прекрасно себя чувствует без voice, и наоборот-->
+      <text delay = "1500">Сосать сочно!</text>
+      <voice delay = "1500">flashback2.ogg</voice>
+   </slide>
+      <!--ещё слайд-->
+   <slide lifetime = "3000">
+      <picture>flashback_intro2.png</picture>
+      <text delay = "1500">А саша просто идёт нахой</text>
+       <voice delay = "1500">flashback3.ogg</voice>
+      <text delay = "1500">Азазаз нахой</text>
+      <voice delay = "1500">flashback1.ogg</voice>
+   </slide>
+   </slideshow>

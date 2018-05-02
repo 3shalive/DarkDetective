@@ -24,7 +24,7 @@ public class Launcher extends StateBasedGame {
 		 * Инициализация сцены подразумевает запуск её init-а
 		 * Не задавайте параметры игроков в этом методе - изменения отразятся на всех сценах!
 		 */
-		this.addState(new Intro(1));
+		this.addState(new Test(1));
 		enterState(1);	
 	}
 
