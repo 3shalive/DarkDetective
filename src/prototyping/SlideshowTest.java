@@ -1,5 +1,9 @@
 package prototyping;
 
+import javax.swing.JOptionPane;
+
+import org.junit.Test;
+import org.junit.platform.commons.annotation.Testable;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -8,13 +12,25 @@ import org.newdawn.slick.state.StateBasedGame;
 import core.MyWorld;
 import core.Slideshow;
 
-public class Test extends MyWorld {
+@Testable	
+public class SlideshowTest extends MyWorld {
 
-	Slideshow slideshow = new Slideshow("data/PrototypingSlideShow.xml");
+	Slideshow correct;
+	Slideshow nullcase;
 	
-	public Test(int id) {
+	public SlideshowTest(int id) {
 		super(id);
-		// TODO Auto-generated constructor stub
+	}
+	
+	@Test
+	public void initalisingTest(){
+		try {
+			correct = new Slideshow("data/PrototypingSlideShow.xml");
+			nullcase = new Slideshow("data/PrototypingSlideShow.xml");
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
 	}
 
 	@Override
@@ -26,7 +42,8 @@ public class Test extends MyWorld {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		super.render(container, game, g);
-		slideshow.draw(g);
+		correct.draw(g);
+		nullcase.draw(g);
 	}
 	
 	@Override
