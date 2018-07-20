@@ -1,5 +1,9 @@
 package scienes;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -25,7 +29,8 @@ public class Flashback extends MyWorld {
 	}
 
 	Entity car, tent, fireplace;
-	int map[][];
+    StringBuilder MBuilder = new StringBuilder();
+    String Maps;
 	Music leitmotive;
 	Image firstSlideshow[];
 	Image line, big_line, lightEffect;
@@ -49,7 +54,7 @@ public class Flashback extends MyWorld {
 		sasha.x = 400; sasha.y = -100;//фикс бага иерархии отрисовки виртуальным сашей
 		octavian.debug = true;
 		camera = new Camera(octavian, new Rectangle(0, 0, 990, 810), container);
-		octavian.x = 450;
+		octavian.x = 480;
 		octavian.y = 400;		
 		leitmotive = new Music("data/Flashback.ogg");
 		//leitmotive.loop(); 
@@ -137,35 +142,35 @@ public class Flashback extends MyWorld {
 		bushevent.markAsActive = true;
 		bushevent1.markAsActive = true;
 		bushevent2.markAsActive = true;
-		int map[][] = { { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-						{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-						{ 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 },
-						{ 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-						{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-						{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-						{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-						{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-						{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-						{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-						{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-						{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-						{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-						{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-						{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-						{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-						{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-						{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
-						{ 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 },
-						{ 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1 },
-						{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-						{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 } };
-
-		for (int i = 0; i < 22; i++) {
-			for (int j = 0; j < 18; j++) {
-				if (map[i][j] == 1) add(new Tree(45 * i, 45 * j, Tree.DARK));		
+		
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader("data/Flashback.map"));
+			String currentLine = ""; 
+			while(!(currentLine = reader.readLine()).equals("end")){
+				MBuilder.append(currentLine);
 			}
 		}
-		this.map = map;
+		catch(IOException | NullPointerException ex){
+            System.out.println(ex.getMessage());
+            System.out.println("Ошибка чтения файла или NPE");
+		}
+		
+		Maps=MBuilder.toString();
+		String[] mapArr = Maps.split("");
+		
+		int j = 0;
+		int i = 0;
+		for(String currentIndex: mapArr) {
+			if(currentIndex.equals("1")) add(new Tree(45 * i, 45 * j, Tree.DARK));
+			j++;
+			if(j==18) {
+				i++;
+				j=0;
+				System.out.println();
+			}
+			System.out.print(currentIndex);
+		}
+		
 		save.id=Launcher.FLASHBACK;
 		for(Bush bush: bush1) this.add(bush);
 		add(fireplace);
