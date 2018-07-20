@@ -43,7 +43,6 @@ public class MainMenu extends World {
 	}
 
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
-		// TODO Auto-generated method stub
 		super.init(container, game);
 		this.game = game;
 		Exit = new Image("textures/Exit.png");

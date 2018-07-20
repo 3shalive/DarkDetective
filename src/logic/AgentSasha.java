@@ -1,7 +1,6 @@
 package logic;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -34,6 +33,7 @@ public class AgentSasha extends Player{
 		if(check("ATTAK"))wearpon.effect(target);
 		debugBounds.setX(x);	
 		debugBounds.setY(y+50);
+
 	}	
 		
 	}

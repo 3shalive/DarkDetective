@@ -97,13 +97,10 @@ public class Run extends MyWorld {
 			octavian.speed = 2;
 		}
 		if(octavian.y<800) showMessage = false;
-		if(monster!=null)System.out.println("monster.y: "+monster.y);
 	}
 
 	@Override
 	public void reset() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }
