@@ -22,6 +22,7 @@ public class AgentSasha extends Player{
 		debugBounds = new Rectangle(x, y+50, 40, 10);
 		player = new Image("textures/sasha.png");
 		wearpon = new Gun(this);
+		
 	}
 	
 	@Override

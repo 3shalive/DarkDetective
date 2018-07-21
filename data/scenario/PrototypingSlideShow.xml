@@ -7,18 +7,18 @@
       <!--субтитры и начало их отрисовки-->
       <text starts = "1500">Так точно</text>
       <!--любые звуки или озвучка и начало её воспроизведения-->
-      <voice starts = "1500">flashback1.ogg</voice>
+      <voice starts = "1500">data/sound/flashback1.ogg</voice>
       <!--можно повторять сколько душе угодно - дочерние теги читаются в цикле-->
       <!--text прекрасно себя чувствует без voice, и наоборот-->
       <text starts = "1500">Сосать сочно</text>
-      <voice starts = "1500">flashback2.ogg</voice>
+      <voice starts = "1500">data/sound/flashback2.ogg</voice>
    </slide>
       <!--ещё слайд-->
    <slide lifetime = "3000">
       <picture>flashback_intro2.png</picture>
       <text starts = "1500">А саша просто идёт нахой</text>
-       <voice starts = "1500">flashback3.ogg</voice>
+       <voice starts = "1500">data/sound/flashback3.ogg</voice>
       <text starts = "1500">Азазаз нахой</text>
-      <voice starts = "1500">flashback1.ogg</voice>
+      <voice starts = "1500">data/sound/flashback1.ogg</voice>
    </slide>
    </slideshow>

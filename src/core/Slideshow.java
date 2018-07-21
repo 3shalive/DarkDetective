@@ -12,6 +12,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.junit.Test;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Sound;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -26,7 +27,7 @@ public class Slideshow {
 	
 	//внутренний счётчик
 	private int counter = 0;
-	//автоматически вычисляемое время жизни слайдшоу
+	//время жизни слайдшоу
 	private int lifetime = 0;
 	//текущий слайд
 	private Slide current_slide = null;
@@ -130,6 +131,9 @@ public class Slideshow {
 					else slide = new Slide(new Image(pic), lifetime);
 					//коллекция субтитров
 					NodeList subtitles = eElement.getElementsByTagName("text");
+					//коллекция озвучки
+					NodeList voiceover = eElement.getElementsByTagName("voice");
+					
 					for (int j = 0; j < subtitles.getLength(); j++) {
 						// узел субтитров
 						Node subtitle = subtitles.item(j);
@@ -140,6 +144,18 @@ public class Slideshow {
 						// добавляем к слайду
 						slide.addText(timing, subtitleText);
 					}
+					
+					
+					//та же история
+					for (int j = 0; j < voiceover.getLength(); j++) {
+						Node voice = voiceover.item(j);
+						String replica = voice.getTextContent();
+						int timing = Integer.parseInt(voice.getAttributes().item(0).getTextContent());
+						Sound sound = new Sound(replica);
+						slide.addVoiceover(timing, sound);
+					}
+					
+					
 					//добавляем слайд..
 					slides.put(lifetime, slide);
 					//..и продлеваем время сущесвования всего слайдшоу
