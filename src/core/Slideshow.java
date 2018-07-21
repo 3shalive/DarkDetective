@@ -111,9 +111,12 @@ public class Slideshow {
 			//Получаем корневой атрибут элемента, обозначающий имя слайдшоу
 			System.out.println("Slideshow name" + doc.getDocumentElement().getAttribute("name"));
 			//Получаем список слайдов
-			NodeList slidesList = doc.getElementsByTagName("slides");
+			NodeList slidesList = doc.getElementsByTagName("slide");
+			System.out.println("--- Начинается слайдшоу ---");
+			System.out.println("размер слайдшоу: "+slidesList.getLength());
 			//перебираем слайды по одному, и парсим
 			for (int i = 0; i < slidesList.getLength(); i++) {
+				System.out.println("--- Слайд ---");
 				Slide slide;
 				//отдельный узел
 				Node nNode = slidesList.item(i);
@@ -131,8 +134,10 @@ public class Slideshow {
 					else slide = new Slide(new Image(pic), lifetime);
 					//коллекция субтитров
 					NodeList subtitles = eElement.getElementsByTagName("text");
+					System.out.println("размер коллекции субтитров: "+subtitles.getLength());
 					//коллекция озвучки
 					NodeList voiceover = eElement.getElementsByTagName("voice");
+					System.out.println("размер коллекции озвучки: "+voiceover.getLength());
 					
 					for (int j = 0; j < subtitles.getLength(); j++) {
 						// узел субтитров
