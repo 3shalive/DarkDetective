@@ -9,6 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import core.MyWorld;
 import core.Slideshow;
+import core.Utils;
 
 public class SlideshowTest extends MyWorld {
 
@@ -16,23 +17,26 @@ public class SlideshowTest extends MyWorld {
 	
 	public SlideshowTest(int id) {
 		super(id);
-		try {
-			correct = new Slideshow("data/scenario/PrototypingSlideShow.xml");
-		} catch (Exception e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, e.getMessage());
-		}
 	}
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game) throws SlickException {
 		super.init(container, game);
-		
+		this.container = container;
+		System.out.println("container upper "+container);
+		try {
+			correct = new Slideshow("data/scenario/PrototypingSlideShow.xml", container);
+			correct.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
 	}
 	
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
 		super.render(container, game, g);
+		Utils.setCharset_Russian(g);
 		correct.draw(g);
 	}
 	

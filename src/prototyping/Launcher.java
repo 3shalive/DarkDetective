@@ -29,7 +29,7 @@ public class Launcher extends StateBasedGame {
 	}
 
 	public static void main(String[] args) throws SlickException {
-		AppGameContainer game = new AppGameContainer(new Launcher("The Beast"));
+		AppGameContainer game = new AppGameContainer(new Launcher("Prototype"));
 		game.setDisplayMode(800, 600, false);
 		game.setTargetFrameRate(60);
 		game.start();

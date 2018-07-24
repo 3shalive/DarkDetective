@@ -3,6 +3,8 @@ package core;
 import java.awt.Dimension;
 import java.util.HashMap;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Sound;
@@ -15,30 +17,35 @@ import org.newdawn.slick.Sound;
 public class Slide {
 
 	//врем€, которое слайд отрисовываетс€ на экране, в тиках FPS
-	private int duration;
+	int slide_lifetime;
 	//внутренний счЄтчик, управл€ющий слайдом, изображение слайда
 	private int counter = 0;
-	private Image image;
+	Image image;
     //текущий отрисовываемый текст, и его позици€ на экране
-	private String current_text = "";
-	private Dimension textPosition = new Dimension(50, 600);
+	String current_text = "";
+	Dimension textPosition = new Dimension(50, 550);
 	//коллекци€ записей озвучки с таймингами 
 	private HashMap<Integer, Sound> voiceover = new HashMap<Integer, Sound>();
 	//коллекци€ субтитров с таймингами
 	private HashMap<Integer, String> replicas = new HashMap<Integer, String>();
 	//флаг завершени€ отрисовки слайда
 	public boolean isFinished = false;
+	GameContainer container;
+	Color opaque_black = new Color(0,0,0,0.7f);
 	
 	private Slide() {}
 	
 	/**
 	 * »нициализирует слайд
 	 * @param image - изображение слайда
-	 * @param duration - врем€ "жизни" слайда
+	 * @param slide_lifetime - врем€ "жизни" слайда
 	 * */
-	public Slide(Image image, int duration) {
+	public Slide(Image image, int slide_lifetime, GameContainer container) {
 		this.image = image;
-		this.duration = duration;
+		this.slide_lifetime = slide_lifetime;
+		this.container = container;
+
+		System.out.println("container "+container);
 	}
 	
 	/**
@@ -46,10 +53,14 @@ public class Slide {
 	 * @param g - набор графических инструментов дл€ отрисовки
 	 * */
 	public void draw(Graphics g) {
-		if (counter < duration) {
+		if (counter < slide_lifetime) {
 			update();
 			g.drawImage(image, 0, 0);
-			g.drawString(current_text, textPosition.width, textPosition.height);
+
+			g.setColor(opaque_black);
+			g.fillRect(0, container.getHeight()-80,container.getWidth(), 80);
+			g.setColor(Color.white);
+			g.drawString(current_text, container.getWidth()/10, container.getHeight()-70);
 		}else isFinished = true;
 	}
 	

@@ -1,24 +1,31 @@
 <?xml version = "1.0"?>
 <slideshow name = "test">
+   <music starts = "0">data/music/Flashback.ogg</music>
    <!--слайд, и его время существования на экране-->
-   <slide lifetime = "3000">
+   <slide lifetime = "800">
       <!--изображение слайда-->
-      <picture>flashback_intro1.png</picture>
+      <picture>textures/flashback_intro1.png</picture>
       <!--субтитры и начало их отрисовки-->
-      <text starts = "1500">Так точно</text>
+      <text starts = "0">изображение слайда</text>
+      <text starts = "200">субтитры и начало их отрисовки</text>
       <!--любые звуки или озвучка и начало её воспроизведения-->
-      <voice starts = "1500">data/sound/flashback1.ogg</voice>
+      <voice starts = "0">data/sound/flashback1.ogg</voice>
       <!--можно повторять сколько душе угодно - дочерние теги читаются в цикле-->
       <!--text прекрасно себя чувствует без voice, и наоборот-->
-      <text starts = "1500">Сосать сочно</text>
-      <voice starts = "1500">data/sound/flashback2.ogg</voice>
+      <text starts = "400">можно повторять сколько душе угодно - дочерние теги читаются в цикле</text>
+      <voice starts = "400">data/sound/flashback2.ogg</voice>
    </slide>
       <!--ещё слайд-->
-   <slide lifetime = "3000">
-      <picture>flashback_intro2.png</picture>
-      <text starts = "1500">А саша просто идёт нахой</text>
-       <voice starts = "1500">data/sound/flashback3.ogg</voice>
-      <text starts = "1500">Азазаз нахой</text>
-      <voice starts = "1500">data/sound/flashback1.ogg</voice>
+   <slide lifetime = "1000">
+      <picture>textures/flashback_intro2.png</picture>
+      <text starts = "0">Звуки вообще не отсюда</text>
+       <voice starts = "0">data/sound/flashback3.ogg</voice>
+      <text starts = "700">Но как-то пофиг</text>
+      <voice starts = "700">data/sound/flashback1.ogg</voice>
+   </slide>
+      <slide lifetime = "1000">
+      <picture>textures/flashback_intro3.png</picture>
+      <text starts = "0">int timing = Integer.parseInt(voice.getAttributes().item(0).getTextContent());</text>
+      <voice starts = "0">data/sound/flashback3.ogg</voice>
    </slide>
    </slideshow>
