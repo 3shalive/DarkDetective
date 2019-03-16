@@ -1,5 +1,7 @@
 package core;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -23,7 +25,7 @@ public class Player extends Entity{
 	public Item wearpon;
 	public Monster target = null;
 	public int hp = 100;
-
+	public int id = 0;
 	
 	public Player(float x, float y) throws SlickException {
 		super(x, y);
@@ -31,10 +33,15 @@ public class Player extends Entity{
 		addType(PLAYER);
 	}
 	
+
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		if(debug)g.draw(debugBounds);
+		if(debug) {
+			g.draw(debugBounds);
+			g.drawString(x+"|"+y, x-40, y-30);
+		}
 		g.drawImage(player, x, y);
 	}
+	
 	
 	}

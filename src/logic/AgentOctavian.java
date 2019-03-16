@@ -1,6 +1,7 @@
 package logic;
 
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -24,6 +25,12 @@ public class AgentOctavian extends Player{
 		wearpon = new Blant(this);
 	}
 
+	@Override
+	public void render(GameContainer container, Graphics g) throws SlickException {
+		super.render(container, g);
+		
+	}
+	
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		if(check("RIGHT")&&collide(SOLID, x+2, y)==null&&collide(PLAYER, x+2, y)==null)x+=speed;

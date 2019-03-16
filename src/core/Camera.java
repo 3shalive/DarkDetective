@@ -18,7 +18,6 @@ public class Camera {
 	public Dimension size;
 	Vector2f position;
 	private Vector2f OutOfBounds = new Vector2f();
-	private GameContainer container;
 	
 	public Camera(Entity toFollow, Rectangle bounds, GameContainer container) {//игрок карта окно
 		this.toFollow = toFollow;
@@ -35,7 +34,6 @@ public class Camera {
 			bounds.setHeight(bounds.getHeight()-(container.getHeight()+20)/2);
 			bounds.setY(bounds.getY()+(container.getHeight()+20)/2);
 		}
-		this.container = container;
 	}
 	public void draw(GameContainer container, Graphics g) throws SlickException{
 

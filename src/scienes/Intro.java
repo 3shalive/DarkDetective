@@ -35,7 +35,6 @@ public class Intro extends World {
 	public Intro(int id) {
 		super(id);
 		this.id=id;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -129,6 +128,7 @@ public class Intro extends World {
 			if(in.isMousePressed(Input.MOUSE_LEFT_BUTTON) && x10>400)
 				f1 = true;
 			fButten=true;
+			game.enterState(Launcher.FLASHBACK);
 		}
 		
 		
@@ -136,8 +136,8 @@ public class Intro extends World {
 	
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
-		music.stop();
 		super.enter(container, game);
+		music.stop();
 	}
 	
 }

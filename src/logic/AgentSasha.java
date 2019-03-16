@@ -1,7 +1,6 @@
 package logic;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -23,12 +22,7 @@ public class AgentSasha extends Player{
 		debugBounds = new Rectangle(x, y+50, 40, 10);
 		player = new Image("textures/sasha.png");
 		wearpon = new Gun(this);
-	}
-	
-	@Override
-	public void render(GameContainer container, Graphics g) throws SlickException {
-		super.render(container, g);
-		g.drawString(x+"|"+y, x-40, y-30);
+		
 	}
 	
 	@Override
@@ -40,6 +34,7 @@ public class AgentSasha extends Player{
 		if(check("ATTAK"))wearpon.effect(target);
 		debugBounds.setX(x);	
 		debugBounds.setY(y+50);
+
 	}	
 		
 	}
